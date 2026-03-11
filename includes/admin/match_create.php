@@ -1,7 +1,4 @@
 <?php
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
-
 session_start();
 require_once __DIR__ . '/../../db.php';
 
@@ -22,6 +19,7 @@ $date_match = '';
 $lieu = '';
 $buts_city = '';
 $buts_adverse = '';
+$youtube_url = '';
 $erreurs = [];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $erreur_acces === '') {
@@ -31,6 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $erreur_acces === '') {
     $lieu = $_POST['lieu'] ?? '';
     $buts_city = trim($_POST['buts_city'] ?? '0');
     $buts_adverse = trim($_POST['buts_adverse'] ?? '0');
+    $youtube_url = trim($_POST['youtube_url'] ?? '');
 
     if ($adversaire === '') {
         $erreurs['adversaire'] = 'Le nom de l\'adversaire est obligatoire.';
@@ -53,8 +52,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $erreur_acces === '') {
 
     if (empty($erreurs)) {
         $requete = $pdo->prepare(
-            'INSERT INTO matchs (opponent, competition, match_date, home_away, goals_city, goals_opponent)
-             VALUES (?, ?, ?, ?, ?, ?)'
+            'INSERT INTO matchs (opponent, competition, match_date, home_away, goals_city, goals_opponent, youtube_url)
+             VALUES (?, ?, ?, ?, ?, ?, ?)'
         );
         $requete->execute([
             $adversaire,
@@ -62,7 +61,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $erreur_acces === '') {
             $date_match,
             $lieu,
             (int)$buts_city,
-            (int)$buts_adverse
+            (int)$buts_adverse,
+            $youtube_url !== '' ? $youtube_url : null
         ]);
 
         header('Location: matchs.php');
@@ -174,6 +174,14 @@ require_once __DIR__ . '/../../includes/header.php';
                         </span>
                     <?php endif; ?>
                 </div>
+            </div>
+
+            <div class="formulaire-champ">
+                <label for="youtube_url">Lien YouTube (optionnel)</label>
+                <input type="url" id="youtube_url" name="youtube_url"
+                    placeholder="https://www.youtube.com/watch?v=..."
+                    value="<?php echo htmlspecialchars($youtube_url, ENT_QUOTES, 'UTF-8'); ?>">
+                <small style="color:var(--gris-fonce); font-size:0.78rem;">Résumé vidéo du match — affiché dans la zone supporter</small>
             </div>
 
             <div style="display:flex; gap:1rem; margin-top:0.5rem;">

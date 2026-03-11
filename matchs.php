@@ -155,7 +155,7 @@ $total  = count($matchs);
 
         const raw = input.value.trim();
         meta.textContent = raw.length === 0
-            ? `${TOTAL} matchs`
+            ? ''
             : `${count} résultat${count > 1 ? 's' : ''} sur ${TOTAL}`;
 
         if (count === 0) {

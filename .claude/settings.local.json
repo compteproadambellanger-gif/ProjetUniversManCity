@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep -A 2 \"INSERT INTO \\\\`players\\\\`\" c:/xampp/htdocs/ProjetUnivers/includes/admin/database.sql)",
+      "Bash(ls c:/xampp/htdocs/ProjetUnivers/includes/admin/*.sql)",
+      "Bash(php -r \"echo password_hash\\(''motdepasse123'', PASSWORD_DEFAULT\\) . PHP_EOL; echo password_hash\\(''motdepasse123'', PASSWORD_DEFAULT\\) . PHP_EOL; echo password_hash\\(''motdepasse123'', PASSWORD_DEFAULT\\) . PHP_EOL;\")",
+      "Bash(\"c:/xampp/php/php.exe\" -r \"echo password_hash\\(''motdepasse123'', PASSWORD_DEFAULT\\) . PHP_EOL; echo password_hash\\(''motdepasse123'', PASSWORD_DEFAULT\\) . PHP_EOL; echo password_hash\\(''motdepasse123'', PASSWORD_DEFAULT\\) . PHP_EOL;\")"
+    ]
+  }
+}

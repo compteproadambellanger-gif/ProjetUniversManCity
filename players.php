@@ -10,7 +10,7 @@ if (!isset($_SESSION['user_id'])) {
 $role = $_SESSION['role'] ?? 'fan';
 
 $requete = $pdo->query(
-    'SELECT id, full_name, shirt_number, position, nationality
+    'SELECT id, full_name, shirt_number, position, nationality, photo_url
      FROM players
      ORDER BY shirt_number'
 );
@@ -65,9 +65,15 @@ $total = count($joueurs);
                 ?>
                 <tr class="player-row">
                     <td class="td-avatar">
-                        <div class="player-avatar player-avatar-<?php echo $pos; ?>">
-                            <?php echo $initiales; ?>
-                        </div>
+                        <?php if (!empty($joueur['photo_url']) && file_exists(__DIR__ . '/' . $joueur['photo_url'])): ?>
+                            <img src="<?php echo htmlspecialchars($joueur['photo_url'], ENT_QUOTES, 'UTF-8'); ?>"
+                                 alt="<?php echo htmlspecialchars($joueur['full_name'], ENT_QUOTES, 'UTF-8'); ?>"
+                                 class="player-photo player-avatar-<?php echo $pos; ?>">
+                        <?php else: ?>
+                            <div class="player-avatar player-avatar-<?php echo $pos; ?>">
+                                <?php echo $initiales; ?>
+                            </div>
+                        <?php endif; ?>
                     </td>
                     <td><?php echo (int)$joueur['shirt_number']; ?></td>
                     <td class="player-name"><?php echo htmlspecialchars($joueur['full_name'], ENT_QUOTES, 'UTF-8'); ?></td>
@@ -145,13 +151,11 @@ $total = count($joueurs);
             r.style.display = (i >= start && i < end) ? '' : 'none';
         });
 
-        // Meta texte
         const raw = input.value.trim();
         meta.textContent = raw.length === 0
-            ? (totalPages > 1 ? `${TOTAL} joueurs` : `${TOTAL} joueurs`)
+            ? ''
             : `${count} résultat${count > 1 ? 's' : ''} sur ${TOTAL}`;
 
-        // État vide
         if (count === 0) {
             emptyTerm.textContent = `"${raw}"`;
             empty.classList.add('visible');
@@ -170,12 +174,10 @@ $total = count($joueurs);
         const shownEnd   = Math.min(currentPage * PER_PAGE, count);
         infoEl.textContent = `${shownStart}–${shownEnd} sur ${count} · Page ${currentPage} / ${totalPages}`;
 
-        // Bouton précédent
         const prev = makeBtn('←', currentPage === 1);
         prev.addEventListener('click', () => { currentPage--; render(); window.scrollTo({top: 0, behavior: 'smooth'}); });
         paginationEl.appendChild(prev);
 
-        // Numéros de pages
         getPageNums(currentPage, totalPages).forEach(p => {
             if (p === '...') {
                 const dots = document.createElement('span');
@@ -190,7 +192,6 @@ $total = count($joueurs);
             }
         });
 
-        // Bouton suivant
         const next = makeBtn('→', currentPage === totalPages);
         next.addEventListener('click', () => { currentPage++; render(); window.scrollTo({top: 0, behavior: 'smooth'}); });
         paginationEl.appendChild(next);

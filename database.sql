@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : lun. 09 mars 2026 à 17:44
+-- Généré le : mar. 10 mars 2026 à 18:37
 -- Version du serveur : 10.4.32-MariaDB
 -- Version de PHP : 8.2.12
 
@@ -34,33 +34,34 @@ CREATE TABLE `matchs` (
   `match_date` date NOT NULL,
   `home_away` enum('HOME','AWAY') NOT NULL,
   `goals_city` int(11) NOT NULL DEFAULT 0,
-  `goals_opponent` int(11) NOT NULL DEFAULT 0
+  `goals_opponent` int(11) NOT NULL DEFAULT 0,
+  `youtube_url` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `matchs`
 --
 
-INSERT INTO `matchs` (`id`, `opponent`, `competition`, `match_date`, `home_away`, `goals_city`, `goals_opponent`) VALUES
-(7, 'Arsenal', 'Premier League', '2025-09-14', 'HOME', 3, 1),
-(8, 'Chelsea', 'Premier League', '2025-09-21', 'AWAY', 2, 2),
-(9, 'Liverpool', 'Premier League', '2025-09-28', 'HOME', 1, 0),
-(10, 'Tottenham', 'Premier League', '2025-10-05', 'AWAY', 4, 1),
-(11, 'Juventus', 'Champions League', '2025-10-22', 'HOME', 2, 0),
-(12, 'Manchester United', 'Premier League', '2025-11-02', 'AWAY', 3, 1),
-(13, 'Brighton', 'Premier League', '2025-11-09', 'HOME', 5, 0),
-(14, 'Real Madrid', 'Champions League', '2025-11-26', 'AWAY', 1, 1),
-(15, 'Aston Villa', 'Premier League', '2025-12-07', 'HOME', 3, 2),
-(16, 'Everton', 'Premier League', '2025-12-15', 'AWAY', 2, 0),
-(17, 'Nottingham Forest', 'Premier League', '2025-12-26', 'HOME', 4, 1),
-(18, 'Brentford', 'Premier League', '2026-01-04', 'AWAY', 2, 1),
-(19, 'Fulham', 'FA Cup', '2026-01-11', 'HOME', 3, 0),
-(20, 'Newcastle', 'Premier League', '2026-01-18', 'AWAY', 1, 2),
-(21, 'Bayern Munich', 'Champions League', '2026-02-04', 'HOME', 3, 1),
-(22, 'West Ham', 'Premier League', '2026-02-15', 'HOME', 4, 0),
-(23, 'Bournemouth', 'Premier League', '2026-02-22', 'AWAY', 2, 1),
-(24, 'Bayern Munich', 'Champions League', '2026-03-04', 'AWAY', 2, 2),
-(25, 'Leicester', 'Premier League', '2026-03-08', 'HOME', 3, 0);
+INSERT INTO `matchs` (`id`, `opponent`, `competition`, `match_date`, `home_away`, `goals_city`, `goals_opponent`, `youtube_url`) VALUES
+(7, 'Arsenal', 'Premier League', '2025-09-14', 'HOME', 3, 1, NULL),
+(8, 'Chelsea', 'Premier League', '2025-09-21', 'AWAY', 2, 2, NULL),
+(9, 'Liverpool', 'Premier League', '2025-09-28', 'HOME', 1, 0, NULL),
+(10, 'Tottenham', 'Premier League', '2025-10-05', 'AWAY', 4, 1, NULL),
+(11, 'Juventus', 'Champions League', '2025-10-22', 'HOME', 2, 0, NULL),
+(12, 'Manchester United', 'Premier League', '2025-11-02', 'AWAY', 3, 1, NULL),
+(13, 'Brighton', 'Premier League', '2025-11-09', 'HOME', 5, 0, NULL),
+(14, 'Real Madrid', 'Champions League', '2025-11-26', 'AWAY', 1, 1, NULL),
+(15, 'Aston Villa', 'Premier League', '2025-12-07', 'HOME', 3, 2, NULL),
+(16, 'Everton', 'Premier League', '2025-12-15', 'AWAY', 2, 0, NULL),
+(17, 'Nottingham Forest', 'Premier League', '2025-12-26', 'HOME', 4, 1, NULL),
+(18, 'Brentford', 'Premier League', '2026-01-04', 'AWAY', 2, 1, NULL),
+(19, 'Fulham', 'FA Cup', '2026-01-11', 'HOME', 3, 0, NULL),
+(20, 'Newcastle', 'Premier League', '2026-01-18', 'AWAY', 1, 2, NULL),
+(21, 'Bayern Munich', 'Champions League', '2026-02-04', 'HOME', 3, 1, NULL),
+(22, 'West Ham', 'Premier League', '2026-02-15', 'HOME', 4, 0, NULL),
+(23, 'Bournemouth', 'Premier League', '2026-02-22', 'AWAY', 2, 1, NULL),
+(24, 'Bayern Munich', 'Champions League', '2026-03-04', 'AWAY', 2, 2, NULL),
+(26, 'Newcastel', 'FA Cup', '2026-03-07', 'AWAY', 3, 1, 'https://www.youtube.com/watch?v=9pRYe7qXiFY');
 
 -- --------------------------------------------------------
 
@@ -76,33 +77,46 @@ CREATE TABLE `players` (
   `shirt_number` int(11) NOT NULL,
   `position` enum('GK','DEF','MID','FWD') NOT NULL,
   `nationality` varchar(100) NOT NULL,
-  `date_of_birth` date DEFAULT NULL
+  `date_of_birth` date DEFAULT NULL,
+  `photo_url` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `players`
 --
 
-INSERT INTO `players` (`id`, `user_id`, `full_name`, `email`, `shirt_number`, `position`, `nationality`, `date_of_birth`) VALUES
-(1, NULL, 'Ederson Moraes', NULL, 31, 'GK', 'Brésil', '1993-08-17'),
-(2, NULL, 'Stefan Ortega', NULL, 18, 'GK', 'Allemagne', '1992-11-06'),
-(3, NULL, 'Kyle Walker', 'kyle.walker@joueur.manchestercity.com', 2, 'DEF', 'Angleterre', '1990-05-28'),
-(4, NULL, 'Rúben Dias', NULL, 3, 'DEF', 'Portugal', '1997-05-14'),
-(5, NULL, 'John Stones', NULL, 5, 'DEF', 'Angleterre', '1994-05-28'),
-(6, NULL, 'Nathan Aké', NULL, 6, 'DEF', 'Pays-Bas', '1995-02-18'),
-(7, NULL, 'Joško Gvardiol', NULL, 24, 'DEF', 'Croatie', '2002-01-23'),
-(8, NULL, 'Manuel Akanji', NULL, 25, 'DEF', 'Suisse', '1995-01-19'),
-(9, NULL, 'Rico Lewis', NULL, 82, 'DEF', 'Angleterre', '2004-11-21'),
-(10, NULL, 'Rodri', NULL, 16, 'MID', 'Espagne', '1991-06-22'),
-(11, NULL, 'Mateo Kovačić', NULL, 8, 'MID', 'Croatie', '1994-05-17'),
-(12, NULL, 'Matheus Nunes', NULL, 27, 'MID', 'Portugal', '1998-08-27'),
-(13, NULL, 'Kevin De Bruyne', 'kevin.debruyne@joueur.manchestercity.com', 17, 'MID', 'Belgique', '1991-06-28'),
-(14, NULL, 'Phil Foden', NULL, 47, 'MID', 'Angleterre', '2000-05-28'),
-(15, NULL, 'Bernardo Silva', NULL, 20, 'MID', 'Portugal', '1994-08-10'),
-(16, NULL, 'Jack Grealish', NULL, 10, 'MID', 'Angleterre', '1995-09-10'),
-(17, NULL, 'Julián Álvarez', NULL, 19, 'FWD', 'Argentine', '2000-01-31'),
-(18, NULL, 'Jérémy Doku', NULL, 11, 'FWD', 'Belgique', '2002-05-12'),
-(19, NULL, 'Erling Haaland', NULL, 9, 'FWD', 'Norvège', '2000-07-21');
+INSERT INTO `players` (`id`, `user_id`, `full_name`, `email`, `shirt_number`, `position`, `nationality`, `date_of_birth`, `photo_url`) VALUES
+(1, NULL, 'Gianluigi Donnarumma', NULL, 1, 'GK', 'Italie', '1999-02-25', NULL),
+(2, NULL, 'James Trafford', NULL, 38, 'GK', 'Angleterre', '2002-10-10', NULL),
+(3, NULL, 'Abdukodir Khusanov', NULL, 40, 'DEF', 'Ouzbékistan', '2003-12-05', NULL),
+(4, NULL, 'Rúben Dias', NULL, 3, 'DEF', 'Portugal', '1997-05-14', NULL),
+(5, NULL, 'John Stones', NULL, 5, 'DEF', 'Angleterre', '1994-05-28', NULL),
+(6, NULL, 'Nathan Aké', NULL, 6, 'DEF', 'Pays-Bas', '1995-02-18', NULL),
+(7, NULL, 'Joško Gvardiol', NULL, 24, 'DEF', 'Croatie', '2002-01-23', NULL),
+(8, NULL, 'Manuel Akanji', NULL, 25, 'DEF', 'Suisse', '1995-01-19', NULL),
+(9, NULL, 'Rico Lewis', NULL, 82, 'DEF', 'Angleterre', '2004-11-21', NULL),
+(10, NULL, 'Rodri', NULL, 16, 'MID', 'Espagne', '1991-06-22', NULL),
+(11, NULL, 'Mateo Kovačić', NULL, 8, 'MID', 'Croatie', '1994-05-17', NULL),
+(12, NULL, 'Matheus Nunes', NULL, 27, 'MID', 'Portugal', '1998-08-27', NULL),
+(13, NULL, 'Tijjani Reijnders', NULL, 14, 'MID', 'Pays-Bas', '1998-07-29', NULL),
+(14, NULL, 'Phil Foden', NULL, 47, 'MID', 'Angleterre', '2000-05-28', NULL),
+(15, NULL, 'Bernardo Silva', NULL, 20, 'MID', 'Portugal', '1994-08-10', NULL),
+(16, NULL, 'Jack Grealish', NULL, 10, 'MID', 'Angleterre', '1995-09-10', NULL),
+(17, NULL, 'Savinho', NULL, 26, 'FWD', 'Brésil', '2004-08-22', NULL),
+(18, NULL, 'Jérémy Doku', NULL, 11, 'FWD', 'Belgique', '2002-05-12', NULL),
+(19, 2, 'Erling Haaland', NULL, 9, 'FWD', 'Norvège', '2000-07-21', NULL),
+(20, NULL, 'Vítor Reis', NULL, 33, 'DEF', 'Brésil', '2006-02-25', NULL),
+(21, NULL, 'Rayan Aït-Nouri', NULL, 35, 'DEF', 'Algérie', '2001-06-06', NULL),
+(22, NULL, 'Marcus BETTINELLI', NULL, 13, 'GK', 'Angleterre', NULL, 'uploads/players/player_22.webp'),
+(23, NULL, 'Marc Guéhi', NULL, 2, 'DEF', 'Angleterre', '2000-09-27', NULL),
+(24, NULL, 'Nico González', NULL, 28, 'MID', 'Espagne', '2001-09-05', NULL),
+(25, NULL, 'Nico O\Reilly', NULL, 80, 'MID', 'Irlande', '2006-02-14', NULL),
+(26, NULL, 'Sverre Nypan', NULL, 65, 'FWD', 'Norvège', '2006-09-03', NULL),
+(27, NULL, 'Rayan Cherki', NULL, 21, 'MID', 'France', '2003-08-17', NULL),
+(28, NULL, 'Omar Marmoush', NULL, 15, 'FWD', 'Égypte', '1999-02-07', NULL),
+(29, NULL, 'Kalvin Phillips', NULL, 4, 'MID', 'Angleterre', '1995-12-02', NULL),
+(30, NULL, 'Joshua Wilson-Esbrand', NULL, 55, 'DEF', 'Angleterre', '2003-09-15', NULL),
+(31, NULL, 'Claudio Echeverri', NULL, 49, 'FWD', 'Argentine', '2006-07-08', NULL);
 
 -- --------------------------------------------------------
 
@@ -146,45 +160,6 @@ INSERT INTO `player_match_stats` (`id`, `player_id`, `match_id`, `titulaire`, `m
 (18, 19, 22, 1, 90, 3, 1, 9.5, 0, 0),
 (19, 19, 23, 1, 90, 1, 0, 7.5, 0, 0),
 (20, 19, 24, 1, 90, 1, 0, 7.0, 0, 0),
-(21, 19, 25, 1, 90, 2, 1, 9.0, 0, 0),
-(22, 13, 7, 1, 90, 0, 2, 8.5, 0, 0),
-(23, 13, 8, 1, 90, 1, 1, 8.0, 0, 0),
-(24, 13, 9, 1, 90, 0, 1, 7.5, 0, 0),
-(25, 13, 10, 1, 90, 1, 2, 9.0, 0, 0),
-(26, 13, 11, 1, 90, 0, 1, 8.0, 0, 0),
-(27, 13, 12, 1, 90, 1, 1, 8.5, 1, 0),
-(28, 13, 13, 1, 90, 0, 3, 9.0, 0, 0),
-(29, 13, 14, 1, 90, 0, 1, 7.5, 0, 0),
-(30, 13, 15, 1, 90, 1, 1, 8.5, 0, 0),
-(31, 13, 16, 1, 90, 0, 1, 7.5, 0, 0),
-(32, 13, 17, 1, 90, 1, 1, 8.0, 0, 0),
-(33, 13, 18, 1, 90, 0, 1, 7.5, 0, 0),
-(34, 13, 19, 1, 90, 1, 1, 8.5, 0, 0),
-(35, 13, 20, 1, 75, 0, 0, 6.5, 0, 0),
-(36, 13, 21, 1, 90, 1, 1, 9.0, 0, 0),
-(37, 13, 22, 1, 90, 0, 2, 8.5, 0, 0),
-(38, 13, 23, 1, 90, 1, 1, 8.5, 0, 0),
-(39, 13, 24, 1, 90, 0, 1, 7.5, 0, 0),
-(40, 13, 25, 1, 90, 1, 2, 9.0, 0, 0),
-(41, 3, 7, 1, 90, 0, 1, 7.5, 0, 0),
-(42, 3, 8, 1, 90, 0, 0, 7.0, 1, 0),
-(43, 3, 9, 1, 90, 0, 0, 7.0, 0, 0),
-(44, 3, 10, 1, 90, 0, 1, 7.5, 0, 0),
-(45, 3, 11, 1, 90, 0, 0, 7.0, 0, 0),
-(46, 3, 12, 1, 90, 0, 0, 7.5, 0, 0),
-(47, 3, 13, 1, 90, 0, 1, 8.0, 0, 0),
-(48, 3, 14, 1, 90, 0, 0, 6.5, 1, 0),
-(49, 3, 15, 1, 90, 0, 0, 7.0, 0, 0),
-(50, 3, 16, 1, 90, 0, 1, 7.5, 0, 0),
-(51, 3, 17, 1, 90, 0, 0, 7.5, 0, 0),
-(52, 3, 18, 1, 90, 0, 0, 7.0, 0, 0),
-(53, 3, 19, 1, 90, 0, 1, 7.5, 0, 0),
-(54, 3, 20, 1, 90, 0, 0, 6.5, 0, 0),
-(55, 3, 21, 1, 90, 0, 0, 7.0, 0, 0),
-(56, 3, 22, 1, 90, 0, 1, 7.5, 0, 0),
-(57, 3, 23, 1, 90, 0, 0, 7.0, 0, 0),
-(58, 3, 24, 1, 90, 0, 0, 7.0, 1, 0),
-(59, 3, 25, 1, 90, 0, 1, 7.5, 0, 0),
 (60, 4, 7, 1, 90, 0, 0, 8.0, 0, 0),
 (61, 4, 8, 1, 90, 0, 0, 7.5, 0, 0),
 (62, 4, 9, 1, 90, 1, 0, 8.5, 0, 0),
@@ -203,45 +178,6 @@ INSERT INTO `player_match_stats` (`id`, `player_id`, `match_id`, `titulaire`, `m
 (75, 4, 22, 1, 90, 0, 0, 8.0, 0, 0),
 (76, 4, 23, 1, 90, 0, 0, 7.5, 0, 0),
 (77, 4, 24, 1, 90, 0, 0, 7.0, 0, 0),
-(78, 4, 25, 1, 90, 1, 0, 8.5, 0, 0),
-(79, 3, 7, 1, 90, 0, 1, 7.5, 0, 0),
-(80, 3, 8, 1, 90, 0, 0, 7.0, 1, 0),
-(81, 3, 9, 1, 90, 0, 0, 7.0, 0, 0),
-(82, 3, 10, 1, 90, 0, 1, 7.5, 0, 0),
-(83, 3, 11, 1, 90, 0, 0, 7.0, 0, 0),
-(84, 3, 12, 1, 90, 0, 0, 7.5, 0, 0),
-(85, 3, 13, 1, 90, 0, 1, 8.0, 0, 0),
-(86, 3, 14, 1, 90, 0, 0, 6.5, 1, 0),
-(87, 3, 15, 1, 90, 0, 0, 7.0, 0, 0),
-(88, 3, 16, 1, 90, 0, 1, 7.5, 0, 0),
-(89, 3, 17, 1, 90, 0, 0, 7.5, 0, 0),
-(90, 3, 18, 1, 90, 0, 0, 7.0, 0, 0),
-(91, 3, 19, 1, 90, 0, 1, 7.5, 0, 0),
-(92, 3, 20, 1, 90, 0, 0, 6.5, 0, 0),
-(93, 3, 21, 1, 90, 0, 0, 7.0, 0, 0),
-(94, 3, 22, 1, 90, 0, 1, 7.5, 0, 0),
-(95, 3, 23, 1, 90, 0, 0, 7.0, 0, 0),
-(96, 3, 24, 1, 90, 0, 0, 7.0, 1, 0),
-(97, 3, 25, 1, 90, 0, 1, 7.5, 0, 0),
-(98, 4, 7, 1, 90, 0, 0, 8.0, 0, 0),
-(99, 4, 8, 1, 90, 0, 0, 7.5, 0, 0),
-(100, 4, 9, 1, 90, 1, 0, 8.5, 0, 0),
-(101, 4, 10, 1, 90, 0, 0, 7.5, 0, 0),
-(102, 4, 11, 1, 90, 0, 0, 8.0, 0, 0),
-(103, 4, 12, 1, 90, 0, 0, 7.5, 1, 0),
-(104, 4, 13, 1, 90, 0, 0, 8.0, 0, 0),
-(105, 4, 14, 1, 90, 0, 0, 7.0, 0, 0),
-(106, 4, 15, 1, 90, 0, 0, 7.5, 0, 0),
-(107, 4, 16, 1, 90, 0, 0, 8.0, 0, 0),
-(108, 4, 17, 1, 90, 0, 0, 8.0, 0, 0),
-(109, 4, 18, 1, 90, 0, 0, 7.5, 0, 0),
-(110, 4, 19, 1, 90, 0, 0, 8.0, 0, 0),
-(111, 4, 20, 1, 90, 0, 0, 6.5, 1, 0),
-(112, 4, 21, 1, 90, 0, 0, 7.5, 0, 0),
-(113, 4, 22, 1, 90, 0, 0, 8.0, 0, 0),
-(114, 4, 23, 1, 90, 0, 0, 7.5, 0, 0),
-(115, 4, 24, 1, 90, 0, 0, 7.0, 0, 0),
-(116, 4, 25, 1, 90, 1, 0, 8.5, 0, 0),
 (117, 5, 7, 1, 90, 0, 0, 7.5, 0, 0),
 (118, 5, 8, 1, 90, 0, 0, 7.0, 0, 0),
 (119, 5, 9, 0, 45, 0, 0, 6.5, 0, 0),
@@ -260,7 +196,6 @@ INSERT INTO `player_match_stats` (`id`, `player_id`, `match_id`, `titulaire`, `m
 (132, 5, 22, 1, 90, 0, 0, 7.5, 0, 0),
 (133, 5, 23, 1, 90, 0, 0, 7.5, 0, 0),
 (134, 5, 24, 1, 90, 0, 0, 7.0, 0, 0),
-(135, 5, 25, 1, 90, 1, 0, 8.0, 0, 0),
 (136, 6, 7, 1, 90, 0, 0, 7.5, 0, 0),
 (137, 6, 8, 1, 90, 0, 0, 7.0, 0, 0),
 (138, 6, 9, 1, 90, 0, 0, 7.0, 1, 0),
@@ -279,7 +214,6 @@ INSERT INTO `player_match_stats` (`id`, `player_id`, `match_id`, `titulaire`, `m
 (151, 6, 22, 1, 90, 0, 0, 7.5, 0, 0),
 (152, 6, 23, 1, 90, 0, 0, 7.0, 0, 0),
 (153, 6, 24, 1, 90, 0, 0, 7.0, 0, 0),
-(154, 6, 25, 1, 90, 0, 0, 7.5, 0, 0),
 (155, 11, 7, 1, 90, 0, 1, 7.5, 0, 0),
 (156, 11, 8, 1, 90, 0, 1, 7.5, 0, 0),
 (157, 11, 9, 1, 90, 0, 0, 7.0, 1, 0),
@@ -298,7 +232,6 @@ INSERT INTO `player_match_stats` (`id`, `player_id`, `match_id`, `titulaire`, `m
 (170, 11, 22, 1, 90, 1, 1, 8.5, 0, 0),
 (171, 11, 23, 1, 90, 0, 0, 7.0, 0, 0),
 (172, 11, 24, 1, 90, 0, 0, 7.0, 1, 0),
-(173, 11, 25, 1, 90, 1, 0, 8.0, 0, 0),
 (174, 16, 7, 1, 75, 0, 1, 7.5, 0, 0),
 (175, 16, 8, 1, 80, 1, 0, 7.5, 0, 0),
 (176, 16, 9, 0, 60, 0, 0, 6.5, 0, 0),
@@ -317,7 +250,6 @@ INSERT INTO `player_match_stats` (`id`, `player_id`, `match_id`, `titulaire`, `m
 (189, 16, 22, 1, 90, 1, 1, 8.5, 0, 0),
 (190, 16, 23, 1, 90, 0, 1, 7.5, 0, 0),
 (191, 16, 24, 1, 90, 0, 0, 7.0, 0, 0),
-(192, 16, 25, 1, 90, 1, 1, 8.5, 0, 0),
 (193, 18, 7, 1, 90, 1, 0, 8.0, 0, 0),
 (194, 18, 8, 1, 90, 0, 1, 7.5, 0, 0),
 (195, 18, 9, 1, 90, 0, 0, 7.0, 0, 0),
@@ -336,7 +268,6 @@ INSERT INTO `player_match_stats` (`id`, `player_id`, `match_id`, `titulaire`, `m
 (208, 18, 22, 1, 90, 1, 2, 9.0, 0, 0),
 (209, 18, 23, 1, 90, 0, 1, 7.5, 0, 0),
 (210, 18, 24, 1, 90, 0, 0, 7.0, 0, 0),
-(211, 18, 25, 1, 90, 1, 1, 8.5, 0, 0),
 (212, 10, 7, 1, 90, 0, 1, 8.5, 0, 0),
 (213, 10, 8, 1, 90, 0, 0, 8.0, 0, 0),
 (214, 10, 9, 1, 90, 0, 0, 7.5, 1, 0),
@@ -355,7 +286,6 @@ INSERT INTO `player_match_stats` (`id`, `player_id`, `match_id`, `titulaire`, `m
 (227, 10, 22, 1, 90, 1, 0, 8.5, 0, 0),
 (228, 10, 23, 1, 90, 0, 1, 8.0, 0, 0),
 (229, 10, 24, 1, 90, 0, 0, 7.5, 1, 0),
-(230, 10, 25, 1, 90, 0, 1, 8.5, 0, 0),
 (231, 15, 7, 1, 90, 0, 1, 8.0, 0, 0),
 (232, 15, 8, 1, 90, 1, 0, 7.5, 0, 0),
 (233, 15, 9, 1, 90, 0, 1, 7.5, 0, 0),
@@ -374,7 +304,6 @@ INSERT INTO `player_match_stats` (`id`, `player_id`, `match_id`, `titulaire`, `m
 (246, 15, 22, 1, 90, 1, 1, 8.5, 0, 0),
 (247, 15, 23, 1, 90, 0, 1, 7.5, 0, 0),
 (248, 15, 24, 1, 90, 0, 0, 7.5, 0, 0),
-(249, 15, 25, 1, 90, 1, 1, 8.5, 0, 0),
 (250, 7, 7, 1, 90, 0, 0, 7.5, 0, 0),
 (251, 7, 8, 1, 90, 0, 0, 7.0, 0, 0),
 (252, 7, 9, 1, 90, 0, 0, 7.5, 0, 0),
@@ -393,7 +322,6 @@ INSERT INTO `player_match_stats` (`id`, `player_id`, `match_id`, `titulaire`, `m
 (265, 7, 22, 1, 90, 1, 0, 8.0, 0, 0),
 (266, 7, 23, 1, 90, 0, 0, 7.5, 0, 0),
 (267, 7, 24, 1, 90, 0, 0, 7.0, 0, 0),
-(268, 7, 25, 1, 90, 0, 1, 7.5, 0, 0),
 (269, 8, 7, 1, 90, 0, 0, 7.5, 0, 0),
 (270, 8, 8, 1, 90, 0, 0, 7.0, 0, 0),
 (271, 8, 9, 1, 90, 0, 0, 7.5, 0, 0),
@@ -412,7 +340,6 @@ INSERT INTO `player_match_stats` (`id`, `player_id`, `match_id`, `titulaire`, `m
 (284, 8, 22, 1, 90, 0, 0, 7.5, 0, 0),
 (285, 8, 23, 1, 90, 0, 0, 7.0, 0, 0),
 (286, 8, 24, 1, 90, 0, 0, 7.0, 1, 0),
-(287, 8, 25, 1, 90, 0, 0, 7.5, 0, 0),
 (288, 12, 7, 0, 45, 0, 0, 6.5, 0, 0),
 (289, 12, 8, 1, 90, 0, 1, 7.5, 0, 0),
 (290, 12, 9, 0, 60, 0, 0, 6.5, 0, 0),
@@ -431,26 +358,6 @@ INSERT INTO `player_match_stats` (`id`, `player_id`, `match_id`, `titulaire`, `m
 (303, 12, 22, 1, 90, 0, 1, 7.5, 0, 0),
 (304, 12, 23, 1, 90, 0, 0, 7.0, 0, 0),
 (305, 12, 24, 0, 60, 0, 0, 6.5, 0, 0),
-(306, 12, 25, 1, 90, 1, 1, 8.0, 0, 0),
-(307, 1, 7, 1, 90, 0, 0, 8.0, 0, 0),
-(308, 1, 8, 1, 90, 0, 0, 7.5, 0, 0),
-(309, 1, 9, 1, 90, 0, 0, 8.0, 0, 0),
-(310, 1, 10, 1, 90, 0, 0, 7.5, 0, 0),
-(311, 1, 11, 1, 90, 0, 0, 8.5, 0, 0),
-(312, 1, 12, 1, 90, 0, 0, 7.5, 0, 0),
-(313, 1, 13, 1, 90, 0, 0, 8.0, 0, 0),
-(314, 1, 14, 1, 90, 0, 0, 7.5, 0, 0),
-(315, 1, 15, 1, 90, 0, 0, 7.5, 0, 0),
-(316, 1, 16, 1, 90, 0, 0, 8.0, 0, 0),
-(317, 1, 17, 1, 90, 0, 0, 8.0, 0, 0),
-(318, 1, 18, 1, 90, 0, 0, 7.5, 0, 0),
-(319, 1, 19, 1, 90, 0, 0, 8.0, 0, 0),
-(320, 1, 20, 1, 90, 0, 0, 6.5, 0, 0),
-(321, 1, 21, 1, 90, 0, 0, 8.0, 0, 0),
-(322, 1, 22, 1, 90, 0, 0, 8.5, 0, 0),
-(323, 1, 23, 1, 90, 0, 0, 8.0, 0, 0),
-(324, 1, 24, 1, 90, 0, 0, 7.5, 0, 0),
-(325, 1, 25, 1, 90, 0, 0, 8.0, 0, 0),
 (345, 17, 7, 0, 30, 0, 0, 6.5, 0, 0),
 (346, 17, 8, 1, 90, 1, 0, 8.0, 0, 0),
 (347, 17, 9, 0, 45, 0, 0, 6.5, 0, 0),
@@ -469,7 +376,6 @@ INSERT INTO `player_match_stats` (`id`, `player_id`, `match_id`, `titulaire`, `m
 (360, 17, 22, 1, 90, 1, 1, 8.5, 0, 0),
 (361, 17, 23, 1, 90, 0, 0, 7.0, 0, 0),
 (362, 17, 24, 1, 90, 1, 0, 8.0, 0, 0),
-(363, 17, 25, 0, 45, 1, 0, 7.5, 0, 0),
 (364, 14, 7, 1, 90, 1, 0, 8.0, 0, 0),
 (365, 14, 8, 1, 90, 0, 1, 7.5, 0, 0),
 (366, 14, 9, 1, 90, 0, 0, 7.0, 1, 0),
@@ -488,7 +394,6 @@ INSERT INTO `player_match_stats` (`id`, `player_id`, `match_id`, `titulaire`, `m
 (379, 14, 22, 1, 90, 1, 2, 9.0, 0, 0),
 (380, 14, 23, 1, 90, 0, 1, 7.5, 0, 0),
 (381, 14, 24, 1, 90, 0, 0, 7.0, 0, 0),
-(382, 14, 25, 1, 90, 2, 1, 9.5, 0, 0),
 (383, 9, 7, 0, 45, 0, 0, 6.5, 0, 0),
 (384, 9, 8, 0, 30, 0, 0, 6.5, 0, 0),
 (385, 9, 9, 1, 90, 0, 0, 7.0, 0, 0),
@@ -507,26 +412,101 @@ INSERT INTO `player_match_stats` (`id`, `player_id`, `match_id`, `titulaire`, `m
 (398, 9, 22, 1, 90, 0, 1, 7.5, 0, 0),
 (399, 9, 23, 1, 90, 0, 0, 7.0, 0, 0),
 (400, 9, 24, 0, 30, 0, 0, 6.5, 0, 0),
-(401, 9, 25, 1, 90, 0, 1, 7.5, 0, 0),
-(421, 2, 7, 0, 0, 0, 0, NULL, 0, 0),
-(422, 2, 8, 0, 0, 0, 0, NULL, 0, 0),
-(423, 2, 9, 0, 0, 0, 0, NULL, 0, 0),
-(424, 2, 10, 0, 0, 0, 0, NULL, 0, 0),
-(425, 2, 11, 0, 0, 0, 0, NULL, 0, 0),
-(426, 2, 12, 0, 0, 0, 0, NULL, 0, 0),
-(427, 2, 13, 0, 0, 0, 0, NULL, 0, 0),
-(428, 2, 14, 0, 0, 0, 0, NULL, 0, 0),
-(429, 2, 15, 0, 0, 0, 0, NULL, 0, 0),
-(430, 2, 16, 0, 0, 0, 0, NULL, 0, 0),
-(431, 2, 17, 0, 0, 0, 0, NULL, 0, 0),
-(432, 2, 18, 0, 0, 0, 0, NULL, 0, 0),
-(433, 2, 19, 0, 0, 0, 0, NULL, 0, 0),
-(434, 2, 20, 0, 0, 0, 0, NULL, 0, 0),
-(435, 2, 21, 0, 0, 0, 0, NULL, 0, 0),
-(436, 2, 22, 0, 0, 0, 0, NULL, 0, 0),
-(437, 2, 23, 0, 0, 0, 0, NULL, 0, 0),
-(438, 2, 24, 0, 0, 0, 0, NULL, 0, 0),
-(439, 2, 25, 0, 0, 0, 0, NULL, 0, 0);
+(459, 1, 7, 1, 90, 0, 0, 7.5, 0, 0),
+(460, 1, 8, 1, 90, 0, 0, 6.5, 0, 0),
+(461, 1, 9, 1, 90, 0, 0, 8.0, 0, 0),
+(462, 1, 10, 1, 90, 0, 0, 7.0, 0, 0),
+(463, 1, 11, 1, 90, 0, 0, 7.5, 0, 0),
+(464, 1, 12, 1, 90, 0, 0, 7.0, 0, 0),
+(465, 1, 13, 1, 90, 0, 0, 8.5, 0, 0),
+(466, 1, 14, 1, 90, 0, 0, 7.0, 0, 0),
+(467, 1, 15, 1, 90, 0, 0, 7.5, 0, 0),
+(468, 1, 16, 1, 90, 0, 0, 7.0, 0, 0),
+(469, 1, 17, 1, 90, 0, 0, 7.5, 0, 0),
+(470, 1, 18, 1, 90, 0, 0, 7.0, 0, 0),
+(471, 1, 19, 1, 90, 0, 0, 8.0, 0, 0),
+(472, 1, 20, 1, 90, 0, 0, 6.5, 0, 0),
+(473, 1, 21, 1, 90, 0, 0, 7.5, 0, 0),
+(474, 1, 22, 1, 90, 0, 0, 8.0, 0, 0),
+(475, 1, 23, 1, 90, 0, 0, 7.5, 0, 0),
+(476, 1, 24, 1, 90, 0, 0, 7.0, 0, 0),
+(477, 1, 26, 1, 90, 0, 0, 7.5, 0, 0),
+(478, 3, 7, 1, 90, 0, 0, 7.0, 0, 0),
+(479, 3, 8, 1, 90, 0, 0, 7.5, 0, 0),
+(480, 3, 9, 1, 90, 1, 0, 7.5, 0, 0),
+(481, 3, 10, 1, 90, 0, 0, 7.0, 1, 0),
+(482, 3, 11, 1, 90, 0, 0, 7.5, 0, 0),
+(483, 3, 12, 1, 90, 0, 0, 6.5, 0, 0),
+(484, 3, 13, 1, 90, 0, 0, 7.5, 0, 0),
+(485, 3, 14, 1, 90, 0, 0, 8.0, 0, 0),
+(486, 3, 15, 1, 90, 0, 0, 7.0, 0, 0),
+(487, 3, 16, 1, 90, 0, 0, 7.5, 0, 0),
+(488, 3, 17, 1, 90, 1, 0, 8.0, 0, 0),
+(489, 3, 18, 1, 90, 0, 0, 7.0, 0, 0),
+(490, 3, 19, 1, 90, 0, 0, 7.5, 0, 0),
+(491, 3, 20, 1, 90, 0, 0, 7.0, 0, 0),
+(492, 3, 21, 1, 90, 0, 0, 8.0, 0, 0),
+(493, 3, 22, 1, 90, 0, 1, 7.5, 0, 0),
+(494, 3, 23, 0, 45, 0, 0, 7.0, 0, 0),
+(495, 3, 24, 1, 90, 0, 0, 7.5, 0, 0),
+(496, 3, 26, 1, 90, 1, 0, 8.0, 0, 0),
+(497, 13, 7, 1, 90, 1, 1, 8.0, 0, 0),
+(498, 13, 8, 1, 90, 0, 1, 7.5, 0, 0),
+(499, 13, 9, 0, 60, 0, 0, 6.5, 0, 0),
+(500, 13, 10, 1, 90, 1, 0, 8.0, 1, 0),
+(501, 13, 11, 1, 90, 0, 1, 7.5, 0, 0),
+(502, 13, 12, 1, 90, 1, 0, 7.5, 0, 0),
+(503, 13, 13, 1, 90, 2, 1, 9.0, 0, 0),
+(504, 13, 14, 1, 90, 0, 0, 7.0, 0, 0),
+(505, 13, 15, 1, 90, 1, 1, 8.5, 0, 0),
+(506, 13, 16, 1, 90, 0, 0, 7.5, 0, 0),
+(507, 13, 17, 1, 90, 1, 0, 8.0, 0, 0),
+(508, 13, 18, 1, 90, 0, 1, 7.5, 0, 0),
+(509, 13, 19, 1, 90, 1, 0, 8.0, 0, 0),
+(510, 13, 20, 0, 30, 0, 0, 6.5, 0, 0),
+(511, 13, 21, 1, 90, 1, 1, 8.5, 0, 0),
+(512, 13, 22, 1, 90, 0, 2, 8.0, 0, 0),
+(513, 13, 23, 1, 90, 1, 0, 7.5, 0, 0),
+(514, 13, 24, 1, 90, 0, 1, 8.0, 0, 0),
+(515, 13, 26, 1, 80, 0, 1, 7.5, 0, 0),
+(516, 28, 18, 1, 90, 1, 1, 8.5, 0, 0),
+(517, 28, 19, 1, 90, 2, 0, 9.0, 0, 0),
+(518, 28, 20, 0, 45, 0, 0, 7.0, 0, 0),
+(519, 28, 21, 1, 90, 1, 1, 8.5, 0, 0),
+(520, 28, 22, 1, 90, 2, 1, 9.0, 0, 0),
+(521, 28, 23, 1, 90, 1, 0, 8.0, 0, 0),
+(522, 28, 24, 1, 90, 0, 1, 7.5, 0, 0),
+(523, 28, 26, 1, 60, 1, 0, 8.0, 0, 0),
+(524, 27, 18, 0, 30, 0, 1, 7.5, 0, 0),
+(525, 27, 19, 1, 90, 1, 0, 8.0, 0, 0),
+(526, 27, 20, 0, 45, 0, 0, 7.0, 0, 0),
+(527, 27, 21, 1, 75, 1, 1, 8.5, 0, 0),
+(528, 27, 22, 1, 90, 0, 2, 8.0, 0, 0),
+(529, 27, 23, 0, 60, 1, 0, 7.5, 0, 0),
+(530, 27, 24, 1, 90, 0, 1, 7.5, 0, 0),
+(531, 27, 26, 1, 65, 1, 1, 8.5, 0, 0),
+(532, 26, 18, 0, 25, 0, 0, 7.0, 0, 0),
+(533, 26, 19, 0, 35, 1, 0, 7.5, 0, 0),
+(534, 26, 21, 0, 30, 0, 1, 7.5, 0, 0),
+(535, 26, 22, 1, 90, 1, 0, 8.0, 0, 0),
+(536, 26, 23, 0, 45, 0, 0, 7.0, 0, 0),
+(537, 26, 24, 0, 45, 0, 0, 7.0, 0, 0),
+(538, 26, 26, 0, 30, 1, 0, 7.5, 0, 0),
+(539, 19, 26, 0, 30, 1, 0, 7.5, 0, 0),
+(540, 4, 26, 1, 90, 0, 0, 7.5, 0, 0),
+(541, 5, 26, 1, 90, 0, 0, 7.5, 0, 0),
+(542, 6, 26, 1, 90, 0, 0, 7.0, 0, 0),
+(543, 7, 26, 1, 90, 1, 0, 8.5, 0, 0),
+(544, 8, 26, 0, 45, 0, 0, 7.0, 0, 0),
+(545, 9, 26, 0, 10, 0, 1, 7.0, 0, 0),
+(546, 10, 26, 1, 90, 0, 1, 8.0, 0, 0),
+(547, 11, 26, 1, 90, 0, 0, 7.5, 0, 0),
+(548, 12, 26, 0, 20, 0, 0, 6.5, 0, 0),
+(549, 14, 26, 1, 90, 1, 1, 9.0, 0, 0),
+(550, 15, 26, 1, 90, 0, 1, 8.0, 0, 0),
+(551, 16, 26, 0, 15, 0, 0, 6.5, 0, 0),
+(552, 17, 26, 1, 90, 1, 0, 8.5, 0, 0),
+(553, 18, 26, 1, 90, 0, 1, 8.0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -538,25 +518,24 @@ CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `nom` varchar(100) NOT NULL,
   `email` varchar(150) NOT NULL,
-  `password_hash` varchar(255) NOT NULL,
+  `photo_profil` varchar(255) DEFAULT NULL,
+  `password_hash` varchar(255) DEFAULT NULL,
   `role` enum('staff','player','fan') NOT NULL DEFAULT 'fan',
   `derniere_activite` datetime DEFAULT NULL,
-  `created_at` datetime NOT NULL DEFAULT current_timestamp()
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `google_id` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `users`
 --
 
-INSERT INTO `users` (`id`, `nom`, `email`, `password_hash`, `role`, `derniere_activite`, `created_at`) VALUES
-(1, 'Admin Staff', 'admin@test.com', 'PASSWORD_HASH_ADMIN', 'staff', NULL, '2026-03-08 19:24:51'),
-(2, 'Kevin De Bruyne', 'user@test.com', 'PASSWORD_HASH_USER', 'player', NULL, '2026-03-08 19:24:51'),
-(3, 'Fan Cityzen', 'visiteur@test.com', 'PASSWORD_HASH_FAN', 'fan', NULL, '2026-03-08 19:24:51'),
-(4, 'Adam', 'compteproadam.bellanger@gmail.com', '$2y$10$BshdV0IZZThRFyPT6HQoHurDv8XgogpycYNDrKukU/p1bCK3vTX/S', 'fan', '2026-03-09 17:16:57', '2026-03-09 09:24:02'),
-(5, 'guardiola', 'pep.guardiola@coach.manchestercity.com', '$2y$10$j6TZle.AmclLfIrbW51/suWICE9wXC0f8n9mZTh9IncFEfb8Vs4lC', 'staff', '2026-03-09 17:27:14', '2026-03-09 09:26:23'),
-(6, 'Kevin De Bruyne', 'kevin.debruyne@joueur.manchestercity.com', '$2y$10$jNJ1QRnO3UQZU7taSFS3DO3pEfIBua.59/Yi9kbbRhI3d6q8cLw4q', 'player', '2026-03-09 17:16:12', '2026-03-09 10:57:12'),
-(7, 'Stefan Ortega', 'Stefan.ortega@joueur.manchestercity.com', '$2y$10$gkiieOgeCmTZcZZMvxr/6O8JF0UKQhA/othMGvSl1yOeYV0wInr2y', 'player', NULL, '2026-03-09 11:00:04'),
-(8, 'kyle walker', 'kyle.walker@joueur.manchestercity.com', '$2y$10$0aT2fyt5bVKxKqWEq/RzCOK/J0JMBy.YPDFtZZOhnvSfNfJEFaz36', 'player', '2026-03-09 16:06:27', '2026-03-09 14:10:24');
+INSERT INTO `users` (`id`, `nom`, `email`, `photo_profil`, `password_hash`, `role`, `derniere_activite`, `created_at`, `google_id`) VALUES
+(1, 'Admin Staff', 'admin@test.com', NULL, '$2y$10$fWDi.94oMN7VLRBjJYtcEuj/frzwXEuzfmKoCtFprtdLKhE1/tY6i', 'staff', NULL, '2026-01-01 00:00:00', NULL),
+(2, 'Erling Haaland', 'user@test.com', NULL, '$2y$10$yzdhjRL0qMXlqlzV1nbiy.44hhCaK1cRGsBNoreaC5VdVDSlMQi5K', 'player', NULL, '2026-01-01 00:00:00', NULL),
+(3, 'Fan Cityzen', 'visiteur@test.com', NULL, '$2y$10$44OXrShqAsXcwRwJb/OHB.oGct2QuEkWk1Cn83.U.8QEvLRkqZa6u', 'fan', NULL, '2026-01-01 00:00:00', NULL),
+(4, 'Adam', 'compteproadam.bellanger@gmail.com', NULL, '$2y$10$BshdV0IZZThRFyPT6HQoHurDv8XgogpycYNDrKukU/p1bCK3vTX/S', 'fan', '2026-03-10 17:49:44', '2026-03-09 09:24:02', '102966968366365245990'),
+(5, 'Guardiola', 'pep.guardiola@coach.manchestercity.com', 'uploads/avatars/avatar_5_1773141129.png', '$2y$10$j6TZle.AmclLfIrbW51/suWICE9wXC0f8n9mZTh9IncFEfb8Vs4lC', 'staff', '2026-03-10 18:36:35', '2026-03-09 09:26:23', NULL);
 
 --
 -- Index pour les tables déchargées
@@ -588,7 +567,8 @@ ALTER TABLE `player_match_stats`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `email` (`email`);
+  ADD UNIQUE KEY `email` (`email`),
+  ADD UNIQUE KEY `google_id` (`google_id`);
 
 --
 -- AUTO_INCREMENT pour les tables déchargées
@@ -598,25 +578,25 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT pour la table `matchs`
 --
 ALTER TABLE `matchs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT pour la table `players`
 --
 ALTER TABLE `players`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT pour la table `player_match_stats`
 --
 ALTER TABLE `player_match_stats`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=440;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=554;
 
 --
 -- AUTO_INCREMENT pour la table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- Contraintes pour les tables déchargées

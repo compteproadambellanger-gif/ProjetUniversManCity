@@ -11,8 +11,7 @@ $userId = $_SESSION['user_id'];
 $succes = '';
 $erreurs = [];
 
-// Récupérer les infos de l'utilisateur
-$requete = $pdo->prepare('SELECT nom, email, role, photo_profil, google_id, created_at FROM users WHERE id = ?');
+$requete = $pdo->prepare('SELECT nom, email, role, photo_profil, google_id, created_at, derniere_activite FROM users WHERE id = ?');
 $requete->execute([$userId]);
 $utilisateur = $requete->fetch(PDO::FETCH_ASSOC);
 
@@ -22,12 +21,8 @@ if (!$utilisateur) {
     exit;
 }
 
-// Mettre à jour la dernière activité
 $pdo->prepare('UPDATE users SET derniere_activite = NOW() WHERE id = ?')->execute([$userId]);
 
-// ============================================================
-// TRAITEMENT : Upload photo de profil
-// ============================================================
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
 
     if ($_POST['action'] === 'photo') {
@@ -42,7 +37,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             } elseif ($fichier['size'] > $tailleMax) {
                 $erreurs['photo'] = 'L\'image ne doit pas dépasser 2 Mo.';
             } else {
-                // Supprimer l'ancienne photo si elle existe
                 if (!empty($utilisateur['photo_profil']) && file_exists($utilisateur['photo_profil'])) {
                     unlink($utilisateur['photo_profil']);
                 }
@@ -65,9 +59,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         }
     }
 
-    // ============================================================
-    // TRAITEMENT : Modifier le nom
-    // ============================================================
     if ($_POST['action'] === 'nom') {
         $nouveauNom = trim($_POST['nom'] ?? '');
         if ($nouveauNom === '') {
@@ -83,20 +74,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         }
     }
 
-    // ============================================================
-    // TRAITEMENT : Changer le mot de passe
-    // ============================================================
     if ($_POST['action'] === 'mot_de_passe') {
         $ancienMdp = $_POST['ancien_mdp'] ?? '';
         $nouveauMdp = $_POST['nouveau_mdp'] ?? '';
         $confirmMdp = $_POST['confirm_mdp'] ?? '';
 
-        // Récupérer le hash actuel
         $req = $pdo->prepare('SELECT password_hash FROM users WHERE id = ?');
         $req->execute([$userId]);
         $hashActuel = $req->fetchColumn();
 
-        // Si l'utilisateur est connecté via Google et n'a pas de mdp
         $estGoogleSansMotDePasse = (!empty($utilisateur['google_id']) && empty($hashActuel));
 
         if (!$estGoogleSansMotDePasse && $ancienMdp === '') {
@@ -132,9 +118,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         }
     }
 
-    // ============================================================
-    // TRAITEMENT : Supprimer la photo
-    // ============================================================
     if ($_POST['action'] === 'supprimer_photo') {
         if (!empty($utilisateur['photo_profil']) && file_exists($utilisateur['photo_profil'])) {
             unlink($utilisateur['photo_profil']);
@@ -147,7 +130,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
     }
 }
 
-// Déterminer si l'utilisateur est Google-only (pas de mdp classique)
 $req = $pdo->prepare('SELECT password_hash FROM users WHERE id = ?');
 $req->execute([$userId]);
 $hashActuel = $req->fetchColumn();
@@ -161,7 +143,6 @@ require_once 'includes/header.php';
         <h1 class="profil-titre-principal">Mon Profil</h1>
         
         <div class="profil-bulles-container">
-            <!-- BULLE 1 : INFOS & PHOTO -->
             <div class="profil-bulle bulle-infos">
                 <div class="profil-avatar-container">
                     <?php if (!empty($utilisateur['photo_profil']) && file_exists($utilisateur['photo_profil'])): ?>
@@ -182,24 +163,21 @@ require_once 'includes/header.php';
                     </form>
                 </div>
 
-                <div class="user-details">
+                <div class="user-details" style="width:100%;min-width:0;overflow:hidden;">
                     <h2 class="user-name"><?php echo htmlspecialchars($utilisateur['nom'], ENT_QUOTES, 'UTF-8'); ?></h2>
-                    <div class="user-info-row">
-                        <span class="info-icon">📧</span>
-                        <span class="info-text"><?php echo htmlspecialchars($utilisateur['email'], ENT_QUOTES, 'UTF-8'); ?></span>
-                    </div>
-                    <div class="user-info-row">
-                        <span class="info-icon">🛡️</span>
-                        <span class="info-text">
-                            <?php
-                            $rolesLabels = ['staff' => 'Staff / Coach', 'player' => 'Joueur', 'fan' => 'Supporter'];
-                            echo $rolesLabels[$utilisateur['role']] ?? $utilisateur['role'];
-                            ?>
-                        </span>
-                    </div>
-                    <div class="user-info-row">
-                        <span class="info-icon">📅</span>
-                        <span class="info-text">Membre depuis le <?php echo date('d/m/Y', strtotime($utilisateur['created_at'])); ?></span>
+                    <div style="display:flex;justify-content:center;margin-top:0.5rem;">
+                        <span style="
+                            display:inline-block;
+                            background:rgba(108,171,221,0.15);
+                            color:var(--bleu-city);
+                            border:1px solid rgba(108,171,221,0.4);
+                            border-radius:999px;
+                            padding:0.4rem 1rem;
+                            font-size:0.85rem;
+                            font-weight:500;
+                            word-break:break-all;
+                            text-align:center;
+                        "><?php echo htmlspecialchars($utilisateur['email'], ENT_QUOTES, 'UTF-8'); ?></span>
                     </div>
                 </div>
 
@@ -211,7 +189,6 @@ require_once 'includes/header.php';
                 <?php endif; ?>
             </div>
 
-            <!-- BULLE 2 : NOM -->
             <div class="profil-bulle bulle-form">
                 <h3>Changer le nom</h3>
                 <form method="post" class="form-bubble">
@@ -226,7 +203,6 @@ require_once 'includes/header.php';
                 </form>
             </div>
 
-            <!-- BULLE 3 : MOT DE PASSE -->
             <div class="profil-bulle bulle-form">
                 <h3>Mot de passe</h3>
                 <form method="post" class="form-bubble">
@@ -258,6 +234,45 @@ require_once 'includes/header.php';
                     <button type="submit" class="btn-bubble">Modifier le mot de passe</button>
                 </form>
             </div>
+
+            <div class="profil-bulle bulle-form">
+                <h3>Activité</h3>
+                <?php
+                $dateInscription = new DateTime($utilisateur['created_at']);
+                $maintenant      = new DateTime();
+                $joursMemre      = (int)$dateInscription->diff($maintenant)->days;
+
+                $derniereActivite = $utilisateur['derniere_activite'];
+                $typeConnexion    = !empty($utilisateur['google_id']) ? 'Google' : 'Email / Mot de passe';
+                $rolesLabels      = ['staff' => 'Staff / Coach', 'player' => 'Joueur', 'fan' => 'Supporter'];
+                $roleLabel        = $rolesLabels[$utilisateur['role']] ?? $utilisateur['role'];
+                ?>
+                <ul style="list-style:none;padding:0;margin:0;width:100%;display:flex;flex-direction:column;gap:1rem;">
+                    <li style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border-color);padding-bottom:0.8rem;">
+                        <span style="color:var(--gris-fonce);font-size:0.88rem;">Membre depuis</span>
+                        <strong style="color:var(--blanc);"><?php echo $dateInscription->format('d/m/Y'); ?></strong>
+                    </li>
+                    <li style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border-color);padding-bottom:0.8rem;">
+                        <span style="color:var(--gris-fonce);font-size:0.88rem;">Jours sur le site</span>
+                        <strong style="color:var(--bleu-city);"><?php echo $joursMemre; ?> jour<?php echo $joursMemre > 1 ? 's' : ''; ?></strong>
+                    </li>
+                    <li style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border-color);padding-bottom:0.8rem;">
+                        <span style="color:var(--gris-fonce);font-size:0.88rem;">Dernière connexion</span>
+                        <strong style="color:var(--blanc);">
+                            <?php echo $derniereActivite ? (new DateTime($derniereActivite))->format('d/m/Y H:i') : 'N/A'; ?>
+                        </strong>
+                    </li>
+                    <li style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border-color);padding-bottom:0.8rem;">
+                        <span style="color:var(--gris-fonce);font-size:0.88rem;">Type de connexion</span>
+                        <strong style="color:var(--blanc);"><?php echo $typeConnexion; ?></strong>
+                    </li>
+                    <li style="display:flex;justify-content:space-between;align-items:center;">
+                        <span style="color:var(--gris-fonce);font-size:0.88rem;">Rôle</span>
+                        <strong style="color:var(--or);"><?php echo $roleLabel; ?></strong>
+                    </li>
+                </ul>
+            </div>
+
         </div>
     </div>
 </div>

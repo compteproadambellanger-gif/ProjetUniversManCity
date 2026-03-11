@@ -14,9 +14,8 @@ if ($id_joueur <= 0) {
     exit;
 }
 
-// Infos du joueur
 $requete = $pdo->prepare(
-    'SELECT id, full_name, shirt_number, position, nationality
+    'SELECT id, full_name, shirt_number, position, nationality, photo_url
      FROM players WHERE id = ?'
 );
 $requete->execute([$id_joueur]);
@@ -27,7 +26,6 @@ if (!$joueur) {
     exit;
 }
 
-// Stats par match
 $requete = $pdo->prepare(
     'SELECT
          m.match_date, m.competition, m.home_away, m.opponent,
@@ -41,7 +39,6 @@ $requete = $pdo->prepare(
 $requete->execute([$id_joueur]);
 $stats_matchs = $requete->fetchAll(PDO::FETCH_ASSOC);
 
-// Calcul des totaux
 $total_buts = $total_passes = $total_minutes = 0;
 $total_jaunes = $total_rouges = $total_notes = $nb_notes = 0;
 
@@ -68,9 +65,16 @@ $pos_av = htmlspecialchars($joueur['position'], ENT_QUOTES, 'UTF-8');
 <?php require_once 'includes/header.php'; ?>
 
 <div class="player-stats-header" style="text-align:center; margin-top:3.5rem; margin-bottom:0.5rem;">
-    <div class="player-avatar-lg player-avatar-<?php echo $pos_av; ?>" style="margin:0 auto 0.75rem;">
-        <?php echo $initiales_av; ?>
-    </div>
+    <?php if (!empty($joueur['photo_url']) && file_exists(__DIR__ . '/' . $joueur['photo_url'])): ?>
+        <img src="<?php echo htmlspecialchars($joueur['photo_url'], ENT_QUOTES, 'UTF-8'); ?>"
+             alt="<?php echo htmlspecialchars($joueur['full_name'], ENT_QUOTES, 'UTF-8'); ?>"
+             class="player-photo-lg player-avatar-<?php echo $pos_av; ?>"
+             style="margin:0 auto 0.75rem; display:block;">
+    <?php else: ?>
+        <div class="player-avatar-lg player-avatar-<?php echo $pos_av; ?>" style="margin:0 auto 0.75rem;">
+            <?php echo $initiales_av; ?>
+        </div>
+    <?php endif; ?>
     <h1 class="titre-page" style="margin-top:0;">
         <?php echo htmlspecialchars($joueur['full_name'], ENT_QUOTES, 'UTF-8'); ?>
     </h1>
@@ -91,7 +95,6 @@ $pos_av = htmlspecialchars($joueur['position'], ENT_QUOTES, 'UTF-8');
     </div>
 <?php else: ?>
 
-    <!-- Résumé de saison -->
     <h3 style="color:var(--bleu-city); margin-bottom:1rem;">Résumé de saison</h3>
     <div class="grille-stats">
         <div class="stat-card">
@@ -156,7 +159,6 @@ $pos_av = htmlspecialchars($joueur['position'], ENT_QUOTES, 'UTF-8');
     $minutes_json = json_encode($donnees_minutes);
     ?>
 
-    <!-- Graphiques personnels -->
     <h3 style="color:var(--bleu-city); margin:1.5rem 0 1rem;">Évolution sur la saison</h3>
     <div style="display:grid; grid-template-columns: 1fr 1fr; gap:1.5rem; margin-bottom:2rem;">
         <div class="carte" style="grid-column: 1 / -1;">
@@ -266,7 +268,6 @@ $pos_av = htmlspecialchars($joueur['position'], ENT_QUOTES, 'UTF-8');
         });
     </script>
 
-    <!-- Détail par match -->
     <h3 style="color:var(--bleu-city); margin:1.5rem 0 1rem;">Détail par match</h3>
     <div class="tableau-container">
         <table>

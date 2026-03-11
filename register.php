@@ -12,21 +12,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $mot_de_passe = $_POST['password'] ?? '';
     $mot_de_passe_confirm = $_POST['password_confirm'] ?? '';
 
-    // 1) Nom
     if ($nom === '') {
         $erreurs['nom'] = 'Le nom d\'utilisateur est obligatoire.';
     } elseif (mb_strlen($nom) < 3) {
         $erreurs['nom'] = 'Le nom doit contenir au moins 3 caractères.';
     }
 
-    // 2) Email
     if ($email === '') {
         $erreurs['email'] = 'L\'email est obligatoire.';
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $erreurs['email'] = 'Le format de l\'email est invalide.';
     }
 
-    // 3) Mot de passe fort
     if ($mot_de_passe === '') {
         $erreurs['mot_de_passe'] = 'Le mot de passe est obligatoire.';
     } else {
@@ -43,23 +40,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    // 4) Confirmation
     if ($mot_de_passe_confirm === '') {
         $erreurs['mot_de_passe_confirm'] = 'La confirmation du mot de passe est obligatoire.';
     } elseif ($mot_de_passe !== $mot_de_passe_confirm) {
         $erreurs['mot_de_passe_confirm'] = 'Les mots de passe ne correspondent pas.';
     }
 
-    // 5) Email déjà utilisé
     if (empty($erreurs)) {
-        $requete = $pdo->prepare('SELECT id FROM users WHERE email = ?');
+        $requete = $pdo->prepare('SELECT id, password_hash FROM users WHERE email = ?');
         $requete->execute([$email]);
-        if ($requete->fetch()) {
+        $existant = $requete->fetch(PDO::FETCH_ASSOC);
+        if ($existant) {
+            if ($existant['password_hash'] === null) {
+                $hash = password_hash($mot_de_passe, PASSWORD_DEFAULT);
+                $pdo->prepare('UPDATE users SET password_hash = ? WHERE id = ?')
+                    ->execute([$hash, $existant['id']]);
+                $_SESSION['toast'] = ['message' => 'Mot de passe créé ! Vous pouvez vous connecter.', 'type' => 'success'];
+                header('Location: login.php');
+                exit;
+            }
             $erreurs['email'] = 'Un compte existe déjà avec cet email.';
         }
     }
 
-    // 6) Déterminer le rôle selon l'email
     if (empty($erreurs)) {
         $role = 'fan';
         if (str_ends_with($email, '@coach.manchestercity.com')) {
@@ -68,7 +71,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $role = 'player';
         }
 
-        // 7) Insertion
         $hash = password_hash($mot_de_passe, PASSWORD_DEFAULT);
         $requete = $pdo->prepare(
             'INSERT INTO users (nom, email, password_hash, role) VALUES (?, ?, ?, ?)'
@@ -189,12 +191,9 @@ function openGooglePopup() {
     const height = 600;
     const left = (window.innerWidth / 2) - (width / 2) + window.screenX;
     const top = (window.innerHeight / 2) - (height / 2) + window.screenY;
-    
-    // Ouvre la fenêtre popup au centre de l'écran
     window.open('login_google.php', 'GoogleLogin', `width=${width},height=${height},left=${left},top=${top},toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes`);
 }
 
-// Permet de rediriger la page principale quand la popup confirme la connexion réussie
 window.addEventListener('message', function(event) {
     if (event.origin === window.location.origin && event.data === 'google_login_success') {
         window.location.href = 'dashboard.php';

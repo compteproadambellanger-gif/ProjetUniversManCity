@@ -1,7 +1,4 @@
 <?php
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
-
 session_start();
 require_once __DIR__ . '/../../db.php';
 
@@ -22,6 +19,7 @@ $full_name = '';
 $shirt_number = '';
 $position = '';
 $nationality = '';
+$photo_url = '';
 
 // 2) Récupérer l'ID du joueur dans l'URL
 $playerId = isset($_GET['id']) ? (int)$_GET['id'] : 0;
@@ -31,7 +29,7 @@ if ($accessError === '') {
         $errors['global'] = 'ID de joueur invalide.';
     } else {
         // Charger les infos du joueur existant
-        $stmt = $pdo->prepare('SELECT id, full_name, shirt_number, position, nationality FROM players WHERE id = ?');
+        $stmt = $pdo->prepare('SELECT id, full_name, shirt_number, position, nationality, photo_url FROM players WHERE id = ?');
         $stmt->execute([$playerId]);
         $player = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -43,6 +41,7 @@ if ($accessError === '') {
             $shirt_number = $player['shirt_number'];
             $position = $player['position'];
             $nationality = $player['nationality'];
+            $photo_url = $player['photo_url'] ?? '';
         }
     }
 }
@@ -82,10 +81,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $accessError === '' && empty($error
         }
     }
 
+    // Gestion upload photo
+    $new_photo_url = $photo_url;
+    if (!empty($_FILES['photo']['name'])) {
+        $file = $_FILES['photo'];
+        $allowed = ['image/jpeg', 'image/png', 'image/webp'];
+        if (!in_array($file['type'], $allowed)) {
+            $errors['photo'] = 'Format non supporté. Utilisez JPG, PNG ou WEBP.';
+        } elseif ($file['size'] > 2 * 1024 * 1024) {
+            $errors['photo'] = 'Image trop grande (max 2MB).';
+        } else {
+            $ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+            $filename = 'player_' . $playerId . '.' . $ext;
+            $dest = __DIR__ . '/../../uploads/players/' . $filename;
+            if (move_uploaded_file($file['tmp_name'], $dest)) {
+                // Supprimer l'ancienne photo si extension différente
+                if ($photo_url && $photo_url !== 'uploads/players/' . $filename) {
+                    $old = __DIR__ . '/../../' . $photo_url;
+                    if (file_exists($old)) @unlink($old);
+                }
+                $new_photo_url = 'uploads/players/' . $filename;
+            } else {
+                $errors['photo'] = 'Erreur lors de l\'upload.';
+            }
+        }
+    }
+
     if (empty($errors)) {
         $stmt = $pdo->prepare(
             'UPDATE players
-             SET full_name = ?, shirt_number = ?, position = ?, nationality = ?
+             SET full_name = ?, shirt_number = ?, position = ?, nationality = ?, photo_url = ?
              WHERE id = ?'
         );
         $stmt->execute([
@@ -93,6 +118,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $accessError === '' && empty($error
             (int)$shirt_number,
             $position,
             $nationality,
+            $new_photo_url !== '' ? $new_photo_url : null,
             $playerId
         ]);
 
@@ -138,7 +164,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $accessError === '' && empty($error
             padding:2rem;
             backdrop-filter:blur(10px);">
 
-        <form action="player_edit.php?id=<?php echo (int)$playerId; ?>" method="post" class="formulaire-groupe">
+        <form action="player_edit.php?id=<?php echo (int)$playerId; ?>" method="post" enctype="multipart/form-data" class="formulaire-groupe">
 
             <div class="formulaire-champ">
                 <label for="full_name">Nom complet du joueur</label>
@@ -187,6 +213,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $accessError === '' && empty($error
                     <span class="erreur-champ">
                         <?php echo htmlspecialchars($errors['nationality'], ENT_QUOTES, 'UTF-8'); ?>
                     </span>
+                <?php endif; ?>
+            </div>
+
+            <div class="formulaire-champ">
+                <label for="photo">Photo du joueur (optionnel)</label>
+                <?php if (!empty($photo_url) && file_exists(__DIR__ . '/../../' . $photo_url)): ?>
+                    <img src="../../<?php echo htmlspecialchars($photo_url, ENT_QUOTES, 'UTF-8'); ?>"
+                         style="width:60px; height:60px; border-radius:50%; object-fit:cover; display:block; margin-bottom:0.5rem; border:2px solid rgba(108,171,221,0.3);">
+                <?php endif; ?>
+                <input type="file" id="photo" name="photo" accept="image/jpeg,image/png,image/webp">
+                <small style="color:var(--gris-fonce); font-size:0.78rem;">JPG, PNG ou WEBP — max 2MB</small>
+                <?php if (!empty($errors['photo'])): ?>
+                    <span class="erreur-champ"><?php echo htmlspecialchars($errors['photo'], ENT_QUOTES, 'UTF-8'); ?></span>
                 <?php endif; ?>
             </div>
 

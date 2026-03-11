@@ -57,9 +57,6 @@
 <?php unset($_SESSION['toast']); endif; ?>
 
 <script>
-// =====================================================
-// SYSTÈME DE TOAST
-// =====================================================
 function showToast(message, type = 'info') {
     const container = document.getElementById('toast-container');
     if (!container) return;
@@ -74,21 +71,16 @@ function showToast(message, type = 'info') {
     toast.innerHTML = `<span>${icon}</span> <span>${message}</span>`;
     container.appendChild(toast);
 
-    // Auto-suppression après 4s
     setTimeout(() => {
         toast.style.animation = 'toastOut 0.5s ease forwards';
         setTimeout(() => toast.remove(), 500);
     }, 4000);
 }
 
-// =====================================================
-// SYSTÈME DE THÈME (DARK/LIGHT)
-// =====================================================
 const themeBtn = document.getElementById('theme-btn');
 const themeIcon = document.getElementById('theme-icon');
 const html = document.documentElement;
 
-// Charger le thème sauvegardé
 const savedTheme = localStorage.getItem('theme') || 'dark';
 html.setAttribute('data-theme', savedTheme);
 updateThemeIcon(savedTheme);
@@ -117,9 +109,6 @@ function updateThemeIcon(theme) {
     }
 }
 
-// =====================================================
-// ANIMATIONS D'ENTRÉE
-// =====================================================
 (function () {
     if (!('IntersectionObserver' in window)) return;
 
@@ -139,7 +128,6 @@ function updateThemeIcon(theme) {
 
     document.querySelectorAll(sel).forEach(el => el.classList.add('animate-in'));
 
-    // Stagger pour les grilles de cards
     document.querySelectorAll('.grille-stats, .profil-bulles-container').forEach(grid => {
         Array.from(grid.children).forEach((child, i) => {
             if (child.classList.contains('animate-in')) {

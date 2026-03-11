@@ -1,7 +1,4 @@
 <?php
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
-
 session_start();
 require_once __DIR__ . '/../../db.php';
 
@@ -23,12 +20,13 @@ $date_match = '';
 $lieu = '';
 $buts_city = '';
 $buts_adverse = '';
+$youtube_url = '';
 
 $id_match = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 
 if ($erreur_acces === '' && $id_match > 0) {
     $requete = $pdo->prepare(
-        'SELECT id, opponent, competition, match_date, home_away, goals_city, goals_opponent
+        'SELECT id, opponent, competition, match_date, home_away, goals_city, goals_opponent, youtube_url
          FROM matchs WHERE id = ?'
     );
     $requete->execute([$id_match]);
@@ -43,6 +41,7 @@ if ($erreur_acces === '' && $id_match > 0) {
         $lieu         = $match['home_away'];
         $buts_city    = $match['goals_city'];
         $buts_adverse = $match['goals_opponent'];
+        $youtube_url  = $match['youtube_url'] ?? '';
     }
 } elseif ($id_match <= 0) {
     $erreurs['global'] = 'Identifiant de match invalide.';
@@ -55,6 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $erreur_acces === '' && empty($erre
     $lieu         = $_POST['lieu'] ?? '';
     $buts_city    = trim($_POST['buts_city'] ?? '0');
     $buts_adverse = trim($_POST['buts_adverse'] ?? '0');
+    $youtube_url  = trim($_POST['youtube_url'] ?? '');
 
     if ($adversaire === '') {
         $erreurs['adversaire'] = 'Le nom de l\'adversaire est obligatoire.';
@@ -79,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $erreur_acces === '' && empty($erre
         $requete = $pdo->prepare(
             'UPDATE matchs
              SET opponent = ?, competition = ?, match_date = ?, home_away = ?,
-                 goals_city = ?, goals_opponent = ?
+                 goals_city = ?, goals_opponent = ?, youtube_url = ?
              WHERE id = ?'
         );
         $requete->execute([
@@ -89,6 +89,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $erreur_acces === '' && empty($erre
             $lieu,
             (int)$buts_city,
             (int)$buts_adverse,
+            $youtube_url !== '' ? $youtube_url : null,
             $id_match
         ]);
 
@@ -213,6 +214,14 @@ require_once __DIR__ . '/../../includes/header.php';
                         </span>
                     <?php endif; ?>
                 </div>
+            </div>
+
+            <div class="formulaire-champ">
+                <label for="youtube_url">Lien YouTube (optionnel)</label>
+                <input type="url" id="youtube_url" name="youtube_url"
+                    placeholder="https://www.youtube.com/watch?v=..."
+                    value="<?php echo htmlspecialchars($youtube_url ?? '', ENT_QUOTES, 'UTF-8'); ?>">
+                <small style="color:var(--gris-fonce); font-size:0.78rem;">Résumé vidéo du match — affiché dans la zone supporter</small>
             </div>
 
             <div style="display:flex; gap:1rem; margin-top:0.5rem;">

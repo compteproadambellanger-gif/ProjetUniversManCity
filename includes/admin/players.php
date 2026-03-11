@@ -13,12 +13,11 @@ if (($_SESSION['role'] ?? '') !== 'staff') {
     $erreurs['acces'] = 'Vous n\'avez pas les droits pour accéder à cette section réservée au staff.';
 }
 
-// Requête avec jointure pour la pastille
 $requete = $pdo->query(
     'SELECT p.id, p.full_name, p.shirt_number, p.position, p.nationality, p.email,
             u.derniere_activite
      FROM players p
-     LEFT JOIN users u ON p.email = u.email
+     LEFT JOIN users u ON p.user_id = u.id
      ORDER BY p.shirt_number'
 );
 $joueurs = $requete->fetchAll(PDO::FETCH_ASSOC);
