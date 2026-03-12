@@ -39,9 +39,12 @@ require_once __DIR__ . '/../../includes/header.php';
     </div>
 <?php else: ?>
 
-    <div style="margin-bottom:1.5rem;">
+    <div style="display:flex; gap:0.75rem; margin-bottom:1.5rem; flex-wrap:wrap;">
         <a href="match_create.php" class="bouton bouton-principal">
             + Ajouter un match
+        </a>
+        <a href="sync_matchs.php" class="bouton bouton-secondaire">
+            ⟳ Sync API
         </a>
     </div>
 

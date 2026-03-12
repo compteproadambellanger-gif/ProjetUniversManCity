@@ -9,13 +9,13 @@ if (!isset($_SESSION['user_id'])) {
 
 $role = $_SESSION['role'] ?? 'fan';
 
-$requete = $pdo->query(
+$matchs = $pdo->query(
     'SELECT id, opponent, competition, match_date, home_away, goals_city, goals_opponent
-     FROM matchs
-     ORDER BY match_date DESC'
-);
-$matchs = $requete->fetchAll(PDO::FETCH_ASSOC);
-$total  = count($matchs);
+     FROM matchs WHERE match_date <= CURDATE() ORDER BY match_date DESC'
+)->fetchAll(PDO::FETCH_ASSOC);
+
+$nb_prochains = (int)$pdo->query('SELECT COUNT(*) FROM matchs WHERE match_date > CURDATE()')->fetchColumn();
+$total = count($matchs);
 ?>
 
 <?php require_once 'includes/header.php'; ?>
@@ -34,14 +34,24 @@ $total  = count($matchs);
 </div>
 <p class="search-meta" id="searchMeta"></p>
 
-<?php if ($role === 'staff'): ?>
-    <div style="display:flex; justify-content:flex-end; margin-bottom:1rem;">
+<div style="display:flex; justify-content:flex-end; align-items:center; margin-bottom:1.5rem; flex-wrap:wrap; gap:0.5rem;">
+    <?php if ($nb_prochains > 0): ?>
+        <a href="prochains_matchs.php" class="bouton bouton-secondaire"
+           style="padding:0.5rem 1.2rem; font-size:0.85rem; border-radius:20px;">
+            Prochains matchs
+            <span style="background:rgba(201,168,76,0.2); color:#C9A84C; border-radius:20px;
+                         padding:1px 7px; font-size:0.75rem; margin-left:0.4rem; font-weight:700;">
+                <?php echo $nb_prochains; ?>
+            </span>
+        </a>
+    <?php endif; ?>
+    <?php if ($role === 'staff'): ?>
         <a href="includes/admin/matchs.php" class="bouton bouton-secondaire"
            style="padding:0.5rem 1.2rem; font-size:0.85rem; border-radius:20px;">
             Gérer les matchs
         </a>
-    </div>
-<?php endif; ?>
+    <?php endif; ?>
+</div>
 
 <div class="tableau-container">
     <table id="matchsTable">

@@ -77,6 +77,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         );
         $requete->execute([$nom, $email, $hash, $role]);
 
+        // Auto-liaison du compte joueur avec son profil players
+        if ($role === 'player') {
+            $newId = (int)$pdo->lastInsertId();
+            $username = strtolower(explode('@', $email)[0]);
+            $parts = preg_split('/[.\-_]/', $username);
+
+            $stmt = $pdo->query('SELECT id, full_name FROM players WHERE user_id IS NULL');
+            $candidats = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            $matched = null;
+            foreach ($candidats as $p) {
+                $playerNorm = strtolower(iconv('UTF-8', 'ASCII//TRANSLIT', $p['full_name']));
+                $allMatch = true;
+                foreach ($parts as $part) {
+                    if ($part !== '' && !str_contains($playerNorm, $part)) {
+                        $allMatch = false;
+                        break;
+                    }
+                }
+                if ($allMatch) {
+                    $matched = $p['id'];
+                    break;
+                }
+            }
+
+            if ($matched) {
+                $pdo->prepare('UPDATE players SET user_id = ? WHERE id = ?')
+                    ->execute([$newId, $matched]);
+            }
+        }
+
         $_SESSION['toast'] = ['message' => 'Compte créé avec succès ! Connectez-vous.', 'type' => 'success'];
         header('Location: login.php');
         exit;

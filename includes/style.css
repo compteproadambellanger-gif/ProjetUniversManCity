@@ -479,6 +479,56 @@ tbody tr:last-child td {
 }
 
 /* =====================================================
+   BULLES TRANSFERTS
+===================================================== */
+.transferts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 0.5rem;
+}
+
+.transfert-bulle {
+    position: relative;
+    overflow: hidden;
+    cursor: default;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.3rem 0.4rem;
+    padding: 0.45rem 0.85rem;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+}
+
+.transfert-bulle::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -150%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.5) 50%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    transform: skewX(-25deg);
+    pointer-events: none;
+}
+
+.transfert-bulle:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+    filter: brightness(1.2);
+}
+
+.transfert-bulle:hover::before {
+    animation: shine 0.7s ease-in-out 1;
+}
+
+/* =====================================================
    FORMULAIRES
 ===================================================== */
 .formulaire-groupe {
@@ -649,28 +699,7 @@ select.champ-erreur {
     padding: 0.85rem;
 }
 
-/* Accès refusé */
-.acces-refuse {
-    text-align: center;
-    padding: 3rem 2rem;
-}
 
-.acces-refuse .acces-refuse-icon {
-    font-size: 3.5rem;
-    margin-bottom: 1rem;
-}
-
-.acces-refuse h2 {
-    color: #e74c3c;
-    font-size: 1.4rem;
-    margin-bottom: 0.6rem;
-}
-
-.acces-refuse p {
-    color: var(--gris-fonce);
-    font-size: 0.9rem;
-    margin-bottom: 1.5rem;
-}
 /* =====================================================
    FOOTER
 ===================================================== */
@@ -842,24 +871,6 @@ select.champ-erreur {
     min-width: 0;
 }
 
-.btn-text-delete {
-    width: 100%;
-    margin-top: 1rem;
-    background: rgba(231, 76, 60, 0.1);
-    border: 1px solid rgba(231, 76, 60, 0.2);
-    color: var(--rouge-hors-ligne);
-    padding: 0.6rem;
-    border-radius: 12px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.btn-text-delete:hover {
-    background: rgba(231, 76, 60, 0.2);
-    transform: scale(1.02);
-}
 
 /* FORM BUBBLES */
 .profil-bulle h3 {

@@ -37,7 +37,7 @@
                         transition:background 0.3s ease;"
                      onmouseover="this.style.background='rgba(108,171,221,0.15)'"
                      onmouseout="this.style.background='#38003c'">
-                     <img src="/ProjetUnivers/images/premiereleague.ico"
+                     <img src="/ProjetUnivers/uploads/premiereleague.ico"
                          alt="Premier League" width="35" height="35" style="object-fit: cover;">
                  </a>
              </div>
