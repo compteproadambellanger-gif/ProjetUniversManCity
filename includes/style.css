@@ -739,6 +739,26 @@ select.champ-erreur {
     flex: 1;
 }
 
+.footer-logo-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    transition: background 0.3s ease;
+}
+.footer-logo-link:hover {
+    background: rgba(108, 171, 221, 0.15);
+}
+.footer-logo-pl {
+    background-color: #38003c;
+    overflow: hidden;
+}
+.footer-logo-pl:hover {
+    background: rgba(108, 171, 221, 0.15);
+}
+
 /* =====================================================
    PROFIL REDESIGN (BULLES)
 ===================================================== */

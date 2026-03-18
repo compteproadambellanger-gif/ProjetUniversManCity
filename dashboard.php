@@ -492,7 +492,7 @@ $message_aleatoire = $messages[array_rand($messages)];
                 $vm_labels[] = (string)$row['annee'];
                 $vm_data[]   = (float)$row['valeur'];
             }
-        } catch (PDOException $e) { /* table pas encore créée */ }
+        } catch (PDOException $e) { }
 
         // Transferts
         $transferts_dash = [];
@@ -503,7 +503,7 @@ $message_aleatoire = $messages[array_rand($messages)];
             );
             $rt2->execute([$joueur['id']]);
             $transferts_dash = $rt2->fetchAll(PDO::FETCH_ASSOC);
-        } catch (PDOException $e) { /* table pas encore créée */ }
+        } catch (PDOException $e) { }
 
         $tr_styles_d = [
             'transfer' => ['bg'=>'rgba(108,171,221,0.1)', 'border'=>'rgba(108,171,221,0.35)', 'color'=>'#6CABDD', 'label'=>'Transfert'],
@@ -632,7 +632,6 @@ $message_aleatoire = $messages[array_rand($messages)];
                         <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(201,168,76,0.35)" stroke-width="1.5" style="margin-bottom:0.6rem;"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
                         <p style="color:rgba(138,155,176,0.55); font-size:0.85rem; margin:0; text-align:center; line-height:1.6;">
                             Historique de valeur marchande<br>
-                            <small style="font-size:0.78rem;">Disponible après migration SQL</small>
                         </p>
                     </div>
                 <?php else: ?>

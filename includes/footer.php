@@ -12,31 +12,11 @@
                     border:1px solid rgba(255,255,255,0.08);
                     border-radius:50px;
                     padding:0.4rem 0.5rem;">
-                 <a href="https://www.mancity.com" target="_blank" style="
-                        display:inline-flex;
-                        align-items:center;
-                        justify-content:center;
-                        width:35px;
-                        height:35px;
-                        border-radius:50px;
-                        transition:background 0.3s ease;"
-                     onmouseover="this.style.background='rgba(108,171,221,0.15)'"
-                     onmouseout="this.style.background='transparent'">
+                 <a href="https://www.mancity.com" target="_blank" class="footer-logo-link">
                      <img src="https://upload.wikimedia.org/wikipedia/en/e/eb/Manchester_City_FC_badge.svg"
                          alt="Man City" width="35" height="35">
                  </a>
-                 <a href="https://www.premierleague.com" target="_blank" style="
-                        display:inline-flex;
-                        align-items:center;
-                        justify-content:center;
-                        width:35px;
-                        height:35px;
-                        border-radius:50%;
-                        background-color: #38003c;
-                        overflow: hidden;
-                        transition:background 0.3s ease;"
-                     onmouseover="this.style.background='rgba(108,171,221,0.15)'"
-                     onmouseout="this.style.background='#38003c'">
+                 <a href="https://www.premierleague.com" target="_blank" class="footer-logo-link footer-logo-pl">
                      <img src="/ProjetUnivers/uploads/premiereleague.ico"
                          alt="Premier League" width="35" height="35" style="object-fit: cover;">
                  </a>
