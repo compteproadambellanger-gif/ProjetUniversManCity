@@ -3,3 +3,4 @@ setup_oauth.php
 callback_google.php
 login_google.php
 .claude/
+.last_sync

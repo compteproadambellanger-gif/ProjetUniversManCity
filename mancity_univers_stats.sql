@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : jeu. 12 mars 2026 à 15:45
+-- Généré le : jeu. 19 mars 2026 à 09:21
 -- Version du serveur : 10.4.32-MariaDB
 -- Version de PHP : 8.2.12
 
@@ -35,79 +35,129 @@ CREATE TABLE `matchs` (
   `home_away` enum('HOME','AWAY') NOT NULL,
   `goals_city` int(11) NOT NULL DEFAULT 0,
   `goals_opponent` int(11) NOT NULL DEFAULT 0,
-  `youtube_url` varchar(255) DEFAULT NULL
+  `youtube_url` varchar(255) DEFAULT NULL,
+  `status` enum('played','upcoming') NOT NULL DEFAULT 'played',
+  `api_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `matchs`
 --
 
-INSERT INTO `matchs` (`id`, `opponent`, `competition`, `match_date`, `home_away`, `goals_city`, `goals_opponent`, `youtube_url`) VALUES
-(1, 'Bournemouth', 'Premier League', '2025-08-16', 'HOME', 3, 0, NULL),
-(2, 'Everton', 'Premier League', '2025-08-23', 'AWAY', 2, 1, NULL),
-(3, 'Chelsea', 'Premier League', '2025-08-31', 'HOME', 3, 1, NULL),
-(4, 'Leeds United', 'Premier League', '2025-09-13', 'AWAY', 2, 0, NULL),
-(5, 'Arsenal', 'Premier League', '2025-09-20', 'HOME', 3, 1, NULL),
-(6, 'Southampton', 'Premier League', '2025-09-27', 'AWAY', 4, 0, NULL),
-(7, 'Liverpool', 'Premier League', '2025-10-04', 'HOME', 2, 1, NULL),
-(8, 'Tottenham', 'Premier League', '2025-10-18', 'AWAY', 3, 0, NULL),
-(9, 'Crystal Palace', 'Premier League', '2025-10-25', 'HOME', 4, 1, NULL),
-(10, 'Wolves', 'Premier League', '2025-11-01', 'AWAY', 2, 0, NULL),
-(11, 'Manchester United', 'Premier League', '2025-11-08', 'HOME', 3, 0, NULL),
-(12, 'Newcastle', 'Premier League', '2025-11-15', 'AWAY', 1, 0, NULL),
-(13, 'Brighton', 'Premier League', '2025-11-22', 'AWAY', 2, 1, NULL),
-(14, 'West Ham', 'Premier League', '2025-11-29', 'HOME', 4, 0, NULL),
-(15, 'Brentford', 'Premier League', '2025-12-03', 'HOME', 3, 0, NULL),
-(16, 'Aston Villa', 'Premier League', '2025-12-06', 'AWAY', 2, 2, NULL),
-(17, 'Nottingham Forest', 'Premier League', '2025-12-13', 'HOME', 5, 1, NULL),
-(18, 'Fulham', 'Premier League', '2025-12-21', 'AWAY', 2, 0, NULL),
-(19, 'Ipswich', 'Premier League', '2025-12-26', 'HOME', 4, 0, NULL),
-(20, 'Newcastle', 'Premier League', '2026-01-04', 'HOME', 2, 0, NULL),
-(21, 'Chelsea', 'Premier League', '2026-01-14', 'AWAY', 1, 1, NULL),
-(22, 'Everton', 'Premier League', '2026-01-21', 'HOME', 3, 0, NULL),
-(23, 'Leeds United', 'Premier League', '2026-02-01', 'HOME', 4, 1, NULL),
-(24, 'Bournemouth', 'Premier League', '2026-02-14', 'AWAY', 2, 0, NULL),
-(25, 'Southampton', 'Premier League', '2026-02-21', 'HOME', 5, 0, NULL),
-(26, 'Arsenal', 'Premier League', '2026-03-07', 'AWAY', 1, 0, 'https://www.youtube.com/watch?v=nWeIa6TpY_g&t=1313s'),
-(27, 'Liverpool', 'Premier League', '2026-03-21', 'AWAY', 0, 0, NULL),
-(28, 'Tottenham', 'Premier League', '2026-03-28', 'HOME', 0, 0, NULL),
-(29, 'Wolves', 'Premier League', '2026-04-01', 'HOME', 0, 0, NULL),
-(30, 'Manchester United', 'Premier League', '2026-04-04', 'AWAY', 0, 0, NULL),
-(31, 'Crystal Palace', 'Premier League', '2026-04-11', 'AWAY', 0, 0, NULL),
-(32, 'Brighton', 'Premier League', '2026-04-18', 'HOME', 0, 0, NULL),
-(33, 'Aston Villa', 'Premier League', '2026-04-22', 'HOME', 0, 0, NULL),
-(34, 'Nottingham Forest', 'Premier League', '2026-04-25', 'AWAY', 0, 0, NULL),
-(35, 'West Ham', 'Premier League', '2026-04-28', 'AWAY', 0, 0, NULL),
-(36, 'Brentford', 'Premier League', '2026-05-02', 'AWAY', 0, 0, NULL),
-(37, 'Fulham', 'Premier League', '2026-05-05', 'HOME', 0, 0, NULL),
-(38, 'Ipswich', 'Premier League', '2026-05-09', 'AWAY', 0, 0, NULL),
-(39, 'Juventus', 'Champions League', '2025-09-17', 'HOME', 2, 0, NULL),
-(40, 'Atlético Madrid', 'Champions League', '2025-10-01', 'AWAY', 1, 1, NULL),
-(41, 'PSG', 'Champions League', '2025-10-22', 'HOME', 3, 1, NULL),
-(42, 'Dortmund', 'Champions League', '2025-11-05', 'AWAY', 2, 1, NULL),
-(43, 'Real Madrid', 'Champions League', '2025-11-26', 'HOME', 2, 0, NULL),
-(44, 'Inter Milan', 'Champions League', '2025-12-10', 'AWAY', 1, 0, NULL),
-(45, 'Porto', 'Champions League', '2026-01-28', 'HOME', 3, 0, NULL),
-(46, 'Benfica', 'Champions League', '2026-02-11', 'AWAY', 2, 0, NULL),
-(47, 'Bayern Munich', 'Champions League', '2026-02-18', 'HOME', 3, 1, NULL),
-(48, 'Bayern Munich', 'Champions League', '2026-03-11', 'AWAY', 2, 2, NULL),
-(49, 'Real Madrid', 'Champions League', '2026-04-08', 'AWAY', 0, 0, NULL),
-(50, 'Real Madrid', 'Champions League', '2026-04-15', 'HOME', 0, 0, NULL),
-(51, 'PSG', 'Champions League', '2026-04-29', 'HOME', 0, 0, NULL),
-(52, 'PSG', 'Champions League', '2026-05-06', 'AWAY', 0, 0, NULL),
-(53, 'Arsenal', 'Champions League', '2026-05-30', 'HOME', 0, 0, NULL),
-(54, 'Fulham', 'FA Cup', '2026-01-10', 'HOME', 3, 0, NULL),
-(55, 'Stoke City', 'FA Cup', '2026-02-07', 'HOME', 4, 0, NULL),
-(56, 'Sheffield United', 'FA Cup', '2026-03-01', 'AWAY', 2, 1, NULL),
-(57, 'Crystal Palace', 'FA Cup', '2026-04-05', 'AWAY', 0, 0, NULL),
-(58, 'Newcastle', 'FA Cup', '2026-04-19', 'HOME', 0, 0, NULL),
-(59, 'Chelsea', 'FA Cup', '2026-05-23', 'HOME', 0, 0, NULL),
-(60, 'Oxford United', 'Carabao Cup', '2025-09-24', 'HOME', 4, 0, NULL),
-(61, 'Aston Villa', 'Carabao Cup', '2025-10-29', 'AWAY', 3, 1, NULL),
-(62, 'Arsenal', 'Carabao Cup', '2025-12-17', 'HOME', 2, 1, NULL),
-(63, 'Liverpool', 'Carabao Cup', '2026-01-06', 'AWAY', 1, 1, NULL),
-(64, 'Liverpool', 'Carabao Cup', '2026-01-20', 'HOME', 2, 0, NULL),
-(65, 'Nottingham Forest', 'Carabao Cup', '2026-02-22', 'HOME', 2, 1, NULL);
+INSERT INTO `matchs` (`id`, `opponent`, `competition`, `match_date`, `home_away`, `goals_city`, `goals_opponent`, `youtube_url`, `status`, `api_id`) VALUES
+(1, 'Bournemouth', 'Premier League', '2025-08-16', 'HOME', 3, 0, NULL, 'played', NULL),
+(2, 'Everton', 'Premier League', '2025-08-23', 'AWAY', 2, 1, NULL, 'played', NULL),
+(3, 'Chelsea', 'Premier League', '2025-08-31', 'HOME', 3, 1, NULL, 'played', NULL),
+(4, 'Leeds United', 'Premier League', '2025-09-13', 'AWAY', 2, 0, NULL, 'played', NULL),
+(5, 'Arsenal', 'Premier League', '2025-09-20', 'HOME', 3, 1, NULL, 'played', NULL),
+(6, 'Southampton', 'Premier League', '2025-09-27', 'AWAY', 4, 0, NULL, 'played', NULL),
+(7, 'Liverpool', 'Premier League', '2025-10-04', 'HOME', 2, 1, NULL, 'played', NULL),
+(8, 'Tottenham', 'Premier League', '2025-10-18', 'AWAY', 3, 0, NULL, 'played', NULL),
+(9, 'Crystal Palace', 'Premier League', '2025-10-25', 'HOME', 4, 1, NULL, 'played', NULL),
+(10, 'Wolves', 'Premier League', '2025-11-01', 'AWAY', 2, 0, NULL, 'played', NULL),
+(11, 'Manchester United', 'Premier League', '2025-11-08', 'HOME', 3, 0, NULL, 'played', NULL),
+(12, 'Newcastle', 'Premier League', '2025-11-15', 'AWAY', 1, 0, NULL, 'played', NULL),
+(13, 'Brighton', 'Premier League', '2025-11-22', 'AWAY', 2, 1, NULL, 'played', NULL),
+(14, 'West Ham', 'Premier League', '2025-11-29', 'HOME', 4, 0, NULL, 'played', NULL),
+(15, 'Brentford', 'Premier League', '2025-12-03', 'HOME', 3, 0, NULL, 'played', NULL),
+(16, 'Aston Villa', 'Premier League', '2025-12-06', 'AWAY', 2, 2, NULL, 'played', NULL),
+(17, 'Nottingham Forest', 'Premier League', '2025-12-13', 'HOME', 5, 1, NULL, 'played', NULL),
+(18, 'Fulham', 'Premier League', '2025-12-21', 'AWAY', 2, 0, NULL, 'played', NULL),
+(19, 'Ipswich', 'Premier League', '2025-12-26', 'HOME', 4, 0, NULL, 'played', NULL),
+(20, 'Newcastle', 'Premier League', '2026-01-04', 'HOME', 2, 0, NULL, 'played', NULL),
+(21, 'Chelsea', 'Premier League', '2026-01-14', 'AWAY', 1, 1, NULL, 'played', NULL),
+(22, 'Everton', 'Premier League', '2026-01-21', 'HOME', 3, 0, NULL, 'played', NULL),
+(23, 'Leeds United', 'Premier League', '2026-02-01', 'HOME', 4, 1, NULL, 'played', NULL),
+(24, 'Bournemouth', 'Premier League', '2026-02-14', 'AWAY', 2, 0, NULL, 'played', NULL),
+(25, 'Southampton', 'Premier League', '2026-02-21', 'HOME', 5, 0, NULL, 'played', NULL),
+(26, 'Arsenal', 'Premier League', '2026-03-07', 'AWAY', 1, 0, 'https://www.youtube.com/watch?v=nWeIa6TpY_g&t=1313s', 'played', NULL),
+(27, 'Liverpool', 'Premier League', '2026-03-21', 'AWAY', 0, 0, NULL, 'upcoming', NULL),
+(28, 'Tottenham', 'Premier League', '2026-03-28', 'HOME', 0, 0, NULL, 'upcoming', NULL),
+(29, 'Wolves', 'Premier League', '2026-04-01', 'HOME', 0, 0, NULL, 'upcoming', NULL),
+(30, 'Manchester United', 'Premier League', '2026-04-04', 'AWAY', 0, 0, NULL, 'upcoming', NULL),
+(31, 'Crystal Palace', 'Premier League', '2026-04-11', 'AWAY', 0, 0, NULL, 'upcoming', NULL),
+(32, 'Brighton', 'Premier League', '2026-04-18', 'HOME', 0, 0, NULL, 'upcoming', NULL),
+(33, 'Aston Villa', 'Premier League', '2026-04-22', 'HOME', 0, 0, NULL, 'upcoming', NULL),
+(34, 'Nottingham Forest', 'Premier League', '2026-04-25', 'AWAY', 0, 0, NULL, 'upcoming', NULL),
+(35, 'West Ham', 'Premier League', '2026-04-28', 'AWAY', 0, 0, NULL, 'upcoming', NULL),
+(36, 'Brentford', 'Premier League', '2026-05-02', 'AWAY', 0, 0, NULL, 'upcoming', NULL),
+(37, 'Fulham', 'Premier League', '2026-05-05', 'HOME', 0, 0, NULL, 'upcoming', NULL),
+(38, 'Ipswich', 'Premier League', '2026-05-09', 'AWAY', 0, 0, NULL, 'upcoming', NULL),
+(39, 'Juventus', 'Champions League', '2025-09-17', 'HOME', 2, 0, NULL, 'played', NULL),
+(40, 'Atlético Madrid', 'Champions League', '2025-10-01', 'AWAY', 1, 1, NULL, 'played', NULL),
+(41, 'PSG', 'Champions League', '2025-10-22', 'HOME', 3, 1, NULL, 'played', NULL),
+(42, 'Dortmund', 'Champions League', '2025-11-05', 'AWAY', 2, 1, NULL, 'played', NULL),
+(43, 'Real Madrid', 'Champions League', '2025-11-26', 'HOME', 2, 0, NULL, 'played', NULL),
+(44, 'Inter Milan', 'Champions League', '2025-12-10', 'AWAY', 1, 0, NULL, 'played', NULL),
+(45, 'Porto', 'Champions League', '2026-01-28', 'HOME', 3, 0, NULL, 'played', NULL),
+(46, 'Benfica', 'Champions League', '2026-02-11', 'AWAY', 2, 0, NULL, 'played', NULL),
+(47, 'Bayern Munich', 'Champions League', '2026-02-18', 'HOME', 3, 1, NULL, 'played', NULL),
+(48, 'Bayern Munich', 'Champions League', '2026-03-11', 'AWAY', 2, 2, NULL, 'played', NULL),
+(49, 'Real Madrid', 'Champions League', '2026-04-08', 'AWAY', 0, 0, NULL, 'upcoming', NULL),
+(50, 'Real Madrid', 'Champions League', '2026-04-15', 'HOME', 0, 0, NULL, 'upcoming', NULL),
+(51, 'PSG', 'Champions League', '2026-04-29', 'HOME', 0, 0, NULL, 'upcoming', NULL),
+(52, 'PSG', 'Champions League', '2026-05-06', 'AWAY', 0, 0, NULL, 'upcoming', NULL),
+(53, 'Arsenal', 'Champions League', '2026-05-30', 'HOME', 0, 0, NULL, 'upcoming', NULL),
+(54, 'Fulham', 'FA Cup', '2026-01-10', 'HOME', 3, 0, NULL, 'played', NULL),
+(55, 'Stoke City', 'FA Cup', '2026-02-07', 'HOME', 4, 0, NULL, 'played', NULL),
+(56, 'Sheffield United', 'FA Cup', '2026-03-01', 'AWAY', 2, 1, NULL, 'played', NULL),
+(57, 'Crystal Palace', 'FA Cup', '2026-04-05', 'AWAY', 0, 0, NULL, 'upcoming', NULL),
+(58, 'Newcastle', 'FA Cup', '2026-04-19', 'HOME', 0, 0, NULL, 'upcoming', NULL),
+(59, 'Chelsea', 'FA Cup', '2026-05-23', 'HOME', 0, 0, NULL, 'upcoming', NULL),
+(60, 'Oxford United', 'Carabao Cup', '2025-09-24', 'HOME', 4, 0, NULL, 'played', NULL),
+(61, 'Aston Villa', 'Carabao Cup', '2025-10-29', 'AWAY', 3, 1, NULL, 'played', NULL),
+(62, 'Arsenal', 'Carabao Cup', '2025-12-17', 'HOME', 2, 1, NULL, 'played', NULL),
+(63, 'Liverpool', 'Carabao Cup', '2026-01-06', 'AWAY', 1, 1, NULL, 'played', NULL),
+(64, 'Liverpool', 'Carabao Cup', '2026-01-20', 'HOME', 2, 0, NULL, 'played', NULL),
+(65, 'Nottingham Forest', 'Carabao Cup', '2026-02-22', 'HOME', 2, 1, NULL, 'played', NULL),
+(66, 'Wolverhampton Wanderers', 'Premier League', '2025-08-16', 'AWAY', 4, 0, NULL, 'played', 537791),
+(67, 'Tottenham Hotspur', 'Premier League', '2025-08-23', 'HOME', 0, 2, NULL, 'played', 537802),
+(68, 'Brighton & Hove Albion', 'Premier League', '2025-08-31', 'AWAY', 1, 2, NULL, 'played', 537807),
+(69, 'Manchester United', 'Premier League', '2025-09-14', 'HOME', 3, 0, NULL, 'played', 537822),
+(70, 'SSC Napoli', 'Ligue des Champions', '2025-09-18', 'HOME', 2, 0, NULL, 'played', 551965),
+(71, 'Arsenal', 'Premier League', '2025-09-21', 'AWAY', 1, 1, NULL, 'played', 537828),
+(72, 'Burnley', 'Premier League', '2025-09-27', 'HOME', 5, 1, NULL, 'played', 537841),
+(73, 'AS Monaco', 'Ligue des Champions', '2025-10-01', 'AWAY', 2, 2, NULL, 'played', 551968),
+(74, 'Brentford', 'Premier League', '2025-10-05', 'AWAY', 1, 0, NULL, 'played', 537848),
+(75, 'Everton', 'Premier League', '2025-10-18', 'HOME', 2, 0, NULL, 'played', 537861),
+(76, 'Villarreal CF', 'Ligue des Champions', '2025-10-21', 'AWAY', 2, 0, NULL, 'played', 551964),
+(77, 'Aston Villa', 'Premier League', '2025-10-26', 'AWAY', 0, 1, NULL, 'played', 537866),
+(78, 'AFC Bournemouth', 'Premier League', '2025-11-02', 'HOME', 3, 1, NULL, 'played', 537881),
+(79, 'Borussia Dortmund', 'Ligue des Champions', '2025-11-05', 'HOME', 4, 1, NULL, 'played', 551939),
+(80, 'Liverpool', 'Premier League', '2025-11-09', 'HOME', 3, 0, NULL, 'played', 537891),
+(81, 'Newcastle United', 'Premier League', '2025-11-22', 'AWAY', 1, 2, NULL, 'played', 537903),
+(82, 'Bayer 04 Leverkusen', 'Ligue des Champions', '2025-11-25', 'HOME', 0, 2, NULL, 'played', 551963),
+(83, 'Leeds United', 'Premier League', '2025-11-29', 'HOME', 3, 2, NULL, 'played', 537911),
+(84, 'Fulham', 'Premier League', '2025-12-02', 'AWAY', 5, 4, NULL, 'played', 537919),
+(85, 'Sunderland', 'Premier League', '2025-12-06', 'HOME', 3, 0, NULL, 'played', 537931),
+(86, 'Real Madrid CF', 'Ligue des Champions', '2025-12-10', 'AWAY', 2, 1, NULL, 'played', 551923),
+(87, 'Crystal Palace', 'Premier League', '2025-12-14', 'AWAY', 3, 0, NULL, 'played', 537936),
+(88, 'West Ham United', 'Premier League', '2025-12-20', 'HOME', 3, 0, NULL, 'played', 537951),
+(89, 'Nottingham Forest', 'Premier League', '2025-12-27', 'AWAY', 2, 1, NULL, 'played', 537963),
+(90, 'Sunderland', 'Premier League', '2026-01-01', 'AWAY', 0, 0, NULL, 'played', 537965),
+(91, 'Chelsea', 'Premier League', '2026-01-04', 'HOME', 1, 1, NULL, 'played', 537981),
+(92, 'Brighton & Hove Albion', 'Premier League', '2026-01-07', 'HOME', 1, 1, NULL, 'played', 537992),
+(93, 'Manchester United', 'Premier League', '2026-01-17', 'AWAY', 0, 2, NULL, 'played', 538001),
+(94, 'FK Bodø/Glimt', 'Ligue des Champions', '2026-01-20', 'AWAY', 1, 3, NULL, 'played', 551966),
+(95, 'Wolverhampton Wanderers', 'Premier League', '2026-01-24', 'HOME', 2, 0, NULL, 'played', 538012),
+(96, 'Galatasaray SK', 'Ligue des Champions', '2026-01-28', 'HOME', 2, 0, NULL, 'played', 551967),
+(97, 'Tottenham Hotspur', 'Premier League', '2026-02-01', 'AWAY', 2, 2, NULL, 'played', 538023),
+(98, 'Liverpool', 'Premier League', '2026-02-08', 'AWAY', 2, 1, NULL, 'played', 538030),
+(99, 'Fulham', 'Premier League', '2026-02-11', 'HOME', 3, 0, NULL, 'played', 538041),
+(100, 'Newcastle United', 'Premier League', '2026-02-21', 'HOME', 2, 1, NULL, 'played', 538051),
+(101, 'Leeds United', 'Premier League', '2026-02-28', 'AWAY', 1, 0, NULL, 'played', 538061),
+(102, 'Nottingham Forest', 'Premier League', '2026-03-04', 'HOME', 2, 2, NULL, 'played', 538071),
+(103, 'Real Madrid CF', 'Ligue des Champions', '2026-03-11', 'AWAY', 0, 3, NULL, 'played', 552070),
+(104, 'West Ham United', 'Premier League', '2026-03-14', 'AWAY', 1, 1, NULL, 'played', 538084),
+(105, 'Real Madrid CF', 'Ligue des Champions', '2026-03-17', 'HOME', 1, 2, NULL, 'played', 552078),
+(106, 'Crystal Palace', 'Premier League', '2026-03-21', 'HOME', 0, 0, NULL, 'upcoming', 538091),
+(107, 'Chelsea', 'Premier League', '2026-04-12', 'AWAY', 0, 0, NULL, 'upcoming', 538100),
+(108, 'Arsenal', 'Premier League', '2026-04-19', 'HOME', 0, 0, NULL, 'upcoming', 538111),
+(109, 'Burnley', 'Premier League', '2026-04-26', 'AWAY', 0, 0, NULL, 'upcoming', 538119),
+(110, 'Everton', 'Premier League', '2026-05-02', 'AWAY', 0, 0, NULL, 'upcoming', 538130),
+(111, 'Brentford', 'Premier League', '2026-05-09', 'HOME', 0, 0, NULL, 'upcoming', 538141),
+(112, 'AFC Bournemouth', 'Premier League', '2026-05-17', 'AWAY', 0, 0, NULL, 'upcoming', 538145),
+(113, 'Aston Villa', 'Premier League', '2026-05-24', 'HOME', 0, 0, NULL, 'upcoming', 538161);
 
 -- --------------------------------------------------------
 
@@ -124,6 +174,7 @@ CREATE TABLE `players` (
   `position` enum('GK','DEF','MID','FWD') NOT NULL,
   `nationality` varchar(100) NOT NULL,
   `date_of_birth` date DEFAULT NULL,
+  `valeur_marchande` decimal(5,1) DEFAULT NULL,
   `photo_url` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -131,38 +182,283 @@ CREATE TABLE `players` (
 -- Déchargement des données de la table `players`
 --
 
-INSERT INTO `players` (`id`, `user_id`, `full_name`, `email`, `shirt_number`, `position`, `nationality`, `date_of_birth`, `photo_url`) VALUES
-(1, NULL, 'Gianluigi Donnarumma', NULL, 1, 'GK', 'Italie', '1999-02-25', 'uploads/players/donnaruma-elec-blue.webp'),
-(2, NULL, 'James Trafford', NULL, 38, 'GK', 'Angleterre', '2002-10-10', 'uploads/players/james-trafford-elec-blue.webp'),
-(3, NULL, 'Abdukodir Khusanov', NULL, 40, 'DEF', 'Ouzbékistan', '2003-12-05', 'uploads/players/abdukodir-khusanov-elec-blue.webp'),
-(4, NULL, 'Rúben Dias', NULL, 3, 'DEF', 'Portugal', '1997-05-14', 'uploads/players/ruben-dias-elec-blue.webp'),
-(5, NULL, 'John Stones', NULL, 5, 'DEF', 'Angleterre', '1994-05-28', 'uploads/players/john-stones-elec-blue.webp'),
-(6, NULL, 'Nathan Aké', NULL, 6, 'DEF', 'Pays-Bas', '1995-02-18', 'uploads/players/nathan-ake-elec-blue.webp'),
-(7, NULL, 'Joško Gvardiol', NULL, 24, 'DEF', 'Croatie', '2002-01-23', 'uploads/players/josko-gvardiol-elec-blue.webp'),
-(8, NULL, 'Manuel Akanji', NULL, 25, 'DEF', 'Suisse', '1995-01-19', 'uploads/players/manuel-akanji-elec-blue.webp'),
-(9, NULL, 'Rico Lewis', NULL, 82, 'DEF', 'Angleterre', '2004-11-21', 'uploads/players/rico-lewis-elec-blue.webp'),
-(10, NULL, 'Rodri', NULL, 16, 'MID', 'Espagne', '1991-06-22', 'uploads/players/rodri-elec-blue.webp'),
-(11, NULL, 'Mateo Kovačić', NULL, 8, 'MID', 'Croatie', '1994-05-17', 'uploads/players/mateo-kovacic-elec-blue.webp'),
-(12, NULL, 'Matheus Nunes', NULL, 27, 'MID', 'Portugal', '1998-08-27', 'uploads/players/matheus-nunes-elec-blue.webp'),
-(13, NULL, 'Tijjani Reijnders', NULL, 14, 'MID', 'Pays-Bas', '1998-07-29', 'uploads/players/tijjani-reijnders-elec-blue.webp'),
-(14, NULL, 'Phil Foden', NULL, 47, 'MID', 'Angleterre', '2000-05-28', 'uploads/players/phil-foden-elec-blue.webp'),
-(15, NULL, 'Bernardo Silva', NULL, 20, 'MID', 'Portugal', '1994-08-10', 'uploads/players/bernardo-silva-elec-blue.webp'),
-(16, NULL, 'Jack Grealish', NULL, 10, 'MID', 'Angleterre', '1995-09-10', 'uploads/players/jack-grealish-elec-blue.webp'),
-(17, NULL, 'Savinho', NULL, 26, 'FWD', 'Brésil', '2004-08-22', 'uploads/players/savinho-elec-blue.webp'),
-(18, NULL, 'Jérémy Doku', NULL, 11, 'FWD', 'Belgique', '2002-05-12', 'uploads/players/jeremy-doku-elec-blue.webp'),
-(19, 2, 'Erling Haaland', NULL, 9, 'FWD', 'Norvège', '2000-07-21', 'uploads/players/erling-haaland-elec-blue.webp'),
-(20, NULL, 'Vítor Reis', NULL, 33, 'DEF', 'Brésil', '2006-02-25', 'uploads/players/vitor-reis-elec-blue.webp'),
-(21, NULL, 'Rayan Aït-Nouri', NULL, 35, 'DEF', 'Algérie', '2001-06-06', 'uploads/players/rayan-ait-nouri-elec-blue.webp'),
-(22, NULL, 'Marcus BETTINELLI', NULL, 13, 'GK', 'Angleterre', NULL, 'uploads/players/player_22.webp'),
-(23, NULL, 'Marc Guéhi', NULL, 2, 'DEF', 'Angleterre', '2000-09-27', 'uploads/players/marc-guehi-profile.webp'),
-(24, NULL, 'Nico González', NULL, 28, 'MID', 'Espagne', '2001-09-05', 'uploads/players/nico-gonzalez-elec-blue.webp'),
-(25, NULL, 'Nico OReilly', NULL, 80, 'MID', 'Irlande', '2006-02-14', 'uploads/players/nico-oreilly-elec-blue.webp'),
-(26, NULL, 'Sverre Nypan', NULL, 65, 'FWD', 'Norvège', '2006-09-03', 'uploads/players/nypan-1.webp'),
-(27, 10, 'Rayan Cherki', NULL, 21, 'MID', 'France', '2003-08-17', 'uploads/players/rayan-cherki-elec-blue.webp'),
-(28, NULL, 'Omar Marmoush', NULL, 15, 'FWD', 'Égypte', '1999-02-07', 'uploads/players/omar-marmoush-elec-blue.webp'),
-(29, NULL, 'Kalvin Phillips', NULL, 4, 'MID', 'Angleterre', '1995-12-02', 'uploads/players/kalvin-phillips-elec-blue.webp'),
-(30, NULL, 'Joshua Wilson-Esbrand', NULL, 55, 'DEF', 'Angleterre', '2003-09-15', 'uploads/players/joshua-wilson-esbrand.webp'),
-(31, NULL, 'Claudio Echeverri', NULL, 49, 'FWD', 'Argentine', '2006-07-08', 'uploads/players/claudio-echeverri-elec-blue.webp');
+INSERT INTO `players` (`id`, `user_id`, `full_name`, `email`, `shirt_number`, `position`, `nationality`, `date_of_birth`, `valeur_marchande`, `photo_url`) VALUES
+(1, NULL, 'Gianluigi Donnarumma', NULL, 1, 'GK', 'Italie', '1999-02-25', 55.0, 'uploads/players/donnaruma-elec-blue.webp'),
+(2, NULL, 'James Trafford', NULL, 38, 'GK', 'Angleterre', '2002-10-10', 10.0, 'uploads/players/james-trafford-elec-blue.webp'),
+(3, NULL, 'Abdukodir Khusanov', NULL, 40, 'DEF', 'Ouzbékistan', '2003-12-05', 30.0, 'uploads/players/abdukodir-khusanov-elec-blue.webp'),
+(4, NULL, 'Rúben Dias', NULL, 3, 'DEF', 'Portugal', '1997-05-14', 70.0, 'uploads/players/ruben-dias-elec-blue.webp'),
+(5, NULL, 'John Stones', NULL, 5, 'DEF', 'Angleterre', '1994-05-28', 35.0, 'uploads/players/john-stones-elec-blue.webp'),
+(6, NULL, 'Nathan Aké', NULL, 6, 'DEF', 'Pays-Bas', '1995-02-18', 30.0, 'uploads/players/nathan-ake-elec-blue.webp'),
+(7, NULL, 'Joško Gvardiol', NULL, 24, 'DEF', 'Croatie', '2002-01-23', 80.0, 'uploads/players/josko-gvardiol-elec-blue.webp'),
+(8, NULL, 'Manuel Akanji', NULL, 25, 'DEF', 'Suisse', '1995-01-19', 35.0, 'uploads/players/manuel-akanji-elec-blue.webp'),
+(9, NULL, 'Rico Lewis', NULL, 82, 'DEF', 'Angleterre', '2004-11-21', 45.0, 'uploads/players/rico-lewis-elec-blue.webp'),
+(10, NULL, 'Rodri', NULL, 16, 'MID', 'Espagne', '1991-06-22', 80.0, 'uploads/players/rodri-elec-blue.webp'),
+(11, NULL, 'Mateo Kovačić', NULL, 8, 'MID', 'Croatie', '1994-05-17', 25.0, 'uploads/players/mateo-kovacic-elec-blue.webp'),
+(12, NULL, 'Matheus Nunes', NULL, 27, 'MID', 'Portugal', '1998-08-27', 40.0, 'uploads/players/matheus-nunes-elec-blue.webp'),
+(13, NULL, 'Tijjani Reijnders', NULL, 14, 'MID', 'Pays-Bas', '1998-07-29', 65.0, 'uploads/players/tijjani-reijnders-elec-blue.webp'),
+(14, NULL, 'Phil Foden', NULL, 47, 'MID', 'Angleterre', '2000-05-28', 120.0, 'uploads/players/phil-foden-elec-blue.webp'),
+(15, NULL, 'Bernardo Silva', NULL, 20, 'MID', 'Portugal', '1994-08-10', 70.0, 'uploads/players/bernardo-silva-elec-blue.webp'),
+(16, NULL, 'Jack Grealish', NULL, 10, 'MID', 'Angleterre', '1995-09-10', 45.0, 'uploads/players/jack-grealish-elec-blue.webp'),
+(17, NULL, 'Savinho', NULL, 26, 'FWD', 'Brésil', '2004-08-22', 55.0, 'uploads/players/savinho-elec-blue.webp'),
+(18, NULL, 'Jérémy Doku', NULL, 11, 'FWD', 'Belgique', '2002-05-12', 60.0, 'uploads/players/jeremy-doku-elec-blue.webp'),
+(19, 2, 'Erling Haaland', NULL, 9, 'FWD', 'Norvège', '2000-07-21', 150.0, 'uploads/players/erling-haaland-elec-blue.webp'),
+(20, NULL, 'Vítor Reis', NULL, 33, 'DEF', 'Brésil', '2006-02-25', 35.0, 'uploads/players/vitor-reis-elec-blue.webp'),
+(21, NULL, 'Rayan Aït-Nouri', NULL, 35, 'DEF', 'Algérie', '2001-06-06', 45.0, 'uploads/players/rayan-ait-nouri-elec-blue.webp'),
+(22, NULL, 'Marcus BETTINELLI', NULL, 13, 'GK', 'Angleterre', NULL, 3.0, 'uploads/players/player_22.webp'),
+(23, NULL, 'Marc Guéhi', NULL, 2, 'DEF', 'Angleterre', '2000-09-27', 60.0, 'uploads/players/marc-guehi-profile.webp'),
+(24, NULL, 'Nico González', NULL, 28, 'MID', 'Espagne', '2001-09-05', 35.0, 'uploads/players/nico-gonzalez-elec-blue.webp'),
+(25, NULL, 'Nico OReilly', NULL, 80, 'MID', 'Irlande', '2006-02-14', 12.0, 'uploads/players/nico-oreilly-elec-blue.webp'),
+(26, NULL, 'Sverre Nypan', NULL, 65, 'FWD', 'Norvège', '2006-09-03', 25.0, 'uploads/players/nypan-1.webp'),
+(27, 10, 'Rayan Cherki', NULL, 21, 'MID', 'France', '2003-08-17', 65.0, 'uploads/players/rayan-cherki-elec-blue.webp'),
+(28, NULL, 'Omar Marmoush', NULL, 15, 'FWD', 'Égypte', '1999-02-07', 70.0, 'uploads/players/omar-marmoush-elec-blue.webp'),
+(29, NULL, 'Kalvin Phillips', NULL, 4, 'MID', 'Angleterre', '1995-12-02', 12.0, 'uploads/players/kalvin-phillips-elec-blue.webp'),
+(30, NULL, 'Joshua Wilson-Esbrand', NULL, 55, 'DEF', 'Angleterre', '2003-09-15', 8.0, 'uploads/players/joshua-wilson-esbrand.webp'),
+(31, NULL, 'Claudio Echeverri', NULL, 49, 'FWD', 'Argentine', '2006-07-08', 30.0, 'uploads/players/claudio-echeverri-elec-blue.webp');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `player_market_value_history`
+--
+
+CREATE TABLE `player_market_value_history` (
+  `id` int(11) NOT NULL,
+  `player_id` int(11) NOT NULL,
+  `annee` year(4) NOT NULL,
+  `valeur` decimal(5,1) NOT NULL COMMENT 'Valeur en M€'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Déchargement des données de la table `player_market_value_history`
+--
+
+INSERT INTO `player_market_value_history` (`id`, `player_id`, `annee`, `valeur`) VALUES
+(1, 1, '2016', 3.0),
+(2, 1, '2017', 5.0),
+(3, 1, '2018', 15.0),
+(4, 1, '2019', 25.0),
+(5, 1, '2020', 35.0),
+(6, 1, '2021', 50.0),
+(7, 1, '2022', 60.0),
+(8, 1, '2023', 60.0),
+(9, 1, '2024', 55.0),
+(10, 1, '2025', 55.0),
+(11, 1, '2026', 55.0),
+(12, 2, '2022', 1.0),
+(13, 2, '2023', 3.0),
+(14, 2, '2024', 8.0),
+(15, 2, '2025', 10.0),
+(16, 2, '2026', 10.0),
+(17, 3, '2021', 1.0),
+(18, 3, '2022', 2.0),
+(19, 3, '2023', 5.0),
+(20, 3, '2024', 15.0),
+(21, 3, '2025', 25.0),
+(22, 3, '2026', 30.0),
+(23, 4, '2018', 8.0),
+(24, 4, '2019', 22.0),
+(25, 4, '2020', 45.0),
+(26, 4, '2021', 75.0),
+(27, 4, '2022', 80.0),
+(28, 4, '2023', 75.0),
+(29, 4, '2024', 65.0),
+(30, 4, '2025', 68.0),
+(31, 4, '2026', 70.0),
+(32, 5, '2017', 18.0),
+(33, 5, '2018', 22.0),
+(34, 5, '2019', 25.0),
+(35, 5, '2020', 28.0),
+(36, 5, '2021', 45.0),
+(37, 5, '2022', 55.0),
+(38, 5, '2023', 50.0),
+(39, 5, '2024', 40.0),
+(40, 5, '2025', 35.0),
+(41, 5, '2026', 35.0),
+(42, 6, '2017', 10.0),
+(43, 6, '2018', 14.0),
+(44, 6, '2019', 18.0),
+(45, 6, '2020', 45.0),
+(46, 6, '2021', 40.0),
+(47, 6, '2022', 38.0),
+(48, 6, '2023', 35.0),
+(49, 6, '2024', 30.0),
+(50, 6, '2025', 30.0),
+(51, 6, '2026', 30.0),
+(52, 7, '2020', 3.0),
+(53, 7, '2021', 12.0),
+(54, 7, '2022', 35.0),
+(55, 7, '2023', 80.0),
+(56, 7, '2024', 80.0),
+(57, 7, '2025', 80.0),
+(58, 7, '2026', 80.0),
+(59, 8, '2018', 10.0),
+(60, 8, '2019', 18.0),
+(61, 8, '2020', 22.0),
+(62, 8, '2021', 25.0),
+(63, 8, '2022', 35.0),
+(64, 8, '2023', 40.0),
+(65, 8, '2024', 38.0),
+(66, 8, '2025', 35.0),
+(67, 8, '2026', 35.0),
+(68, 9, '2022', 2.0),
+(69, 9, '2023', 8.0),
+(70, 9, '2024', 25.0),
+(71, 9, '2025', 40.0),
+(72, 9, '2026', 45.0),
+(73, 10, '2017', 6.0),
+(74, 10, '2018', 15.0),
+(75, 10, '2019', 35.0),
+(76, 10, '2020', 55.0),
+(77, 10, '2021', 70.0),
+(78, 10, '2022', 80.0),
+(79, 10, '2023', 100.0),
+(80, 10, '2024', 100.0),
+(81, 10, '2025', 85.0),
+(82, 10, '2026', 80.0),
+(83, 11, '2016', 28.0),
+(84, 11, '2018', 35.0),
+(85, 11, '2019', 32.0),
+(86, 11, '2020', 28.0),
+(87, 11, '2021', 30.0),
+(88, 11, '2022', 28.0),
+(89, 11, '2023', 30.0),
+(90, 11, '2024', 25.0),
+(91, 11, '2025', 22.0),
+(92, 11, '2026', 25.0),
+(93, 12, '2020', 4.0),
+(94, 12, '2021', 10.0),
+(95, 12, '2022', 40.0),
+(96, 12, '2023', 55.0),
+(97, 12, '2024', 45.0),
+(98, 12, '2025', 38.0),
+(99, 12, '2026', 40.0),
+(100, 13, '2019', 2.0),
+(101, 13, '2020', 5.0),
+(102, 13, '2021', 10.0),
+(103, 13, '2022', 18.0),
+(104, 13, '2023', 40.0),
+(105, 13, '2024', 60.0),
+(106, 13, '2025', 65.0),
+(107, 13, '2026', 65.0),
+(108, 14, '2018', 5.0),
+(109, 14, '2019', 15.0),
+(110, 14, '2020', 35.0),
+(111, 14, '2021', 65.0),
+(112, 14, '2022', 100.0),
+(113, 14, '2023', 120.0),
+(114, 14, '2024', 120.0),
+(115, 14, '2025', 115.0),
+(116, 14, '2026', 120.0),
+(117, 15, '2017', 22.0),
+(118, 15, '2018', 40.0),
+(119, 15, '2019', 60.0),
+(120, 15, '2020', 55.0),
+(121, 15, '2021', 70.0),
+(122, 15, '2022', 80.0),
+(123, 15, '2023', 78.0),
+(124, 15, '2024', 65.0),
+(125, 15, '2025', 68.0),
+(126, 15, '2026', 70.0),
+(127, 16, '2018', 10.0),
+(128, 16, '2019', 20.0),
+(129, 16, '2020', 35.0),
+(130, 16, '2021', 100.0),
+(131, 16, '2022', 80.0),
+(132, 16, '2023', 60.0),
+(133, 16, '2024', 50.0),
+(134, 16, '2025', 45.0),
+(135, 16, '2026', 45.0),
+(136, 17, '2022', 2.0),
+(137, 17, '2023', 10.0),
+(138, 17, '2024', 30.0),
+(139, 17, '2025', 50.0),
+(140, 17, '2026', 55.0),
+(141, 18, '2020', 4.0),
+(142, 18, '2021', 8.0),
+(143, 18, '2022', 22.0),
+(144, 18, '2023', 60.0),
+(145, 18, '2024', 65.0),
+(146, 18, '2025', 62.0),
+(147, 18, '2026', 60.0),
+(148, 19, '2018', 8.0),
+(149, 19, '2019', 30.0),
+(150, 19, '2020', 80.0),
+(151, 19, '2021', 150.0),
+(152, 19, '2022', 150.0),
+(153, 19, '2023', 200.0),
+(154, 19, '2024', 180.0),
+(155, 19, '2025', 160.0),
+(156, 19, '2026', 150.0),
+(157, 20, '2023', 2.0),
+(158, 20, '2024', 10.0),
+(159, 20, '2025', 22.0),
+(160, 20, '2026', 35.0),
+(161, 21, '2020', 2.0),
+(162, 21, '2021', 6.0),
+(163, 21, '2022', 18.0),
+(164, 21, '2023', 30.0),
+(165, 21, '2024', 40.0),
+(166, 21, '2025', 43.0),
+(167, 21, '2026', 45.0),
+(168, 22, '2018', 3.0),
+(169, 22, '2020', 4.0),
+(170, 22, '2022', 4.0),
+(171, 22, '2024', 3.0),
+(172, 22, '2026', 3.0),
+(173, 23, '2020', 2.0),
+(174, 23, '2021', 6.0),
+(175, 23, '2022', 15.0),
+(176, 23, '2023', 30.0),
+(177, 23, '2024', 55.0),
+(178, 23, '2025', 60.0),
+(179, 23, '2026', 60.0),
+(180, 24, '2021', 4.0),
+(181, 24, '2022', 10.0),
+(182, 24, '2023', 22.0),
+(183, 24, '2024', 33.0),
+(184, 24, '2025', 37.0),
+(185, 24, '2026', 35.0),
+(186, 25, '2024', 1.0),
+(187, 25, '2025', 6.0),
+(188, 25, '2026', 12.0),
+(189, 26, '2023', 1.0),
+(190, 26, '2024', 6.0),
+(191, 26, '2025', 15.0),
+(192, 26, '2026', 25.0),
+(193, 27, '2020', 4.0),
+(194, 27, '2021', 12.0),
+(195, 27, '2022', 28.0),
+(196, 27, '2023', 45.0),
+(197, 27, '2024', 60.0),
+(198, 27, '2025', 65.0),
+(199, 27, '2026', 65.0),
+(200, 28, '2019', 2.0),
+(201, 28, '2020', 3.0),
+(202, 28, '2021', 5.0),
+(203, 28, '2022', 10.0),
+(204, 28, '2023', 18.0),
+(205, 28, '2024', 45.0),
+(206, 28, '2025', 65.0),
+(207, 28, '2026', 70.0),
+(208, 29, '2017', 3.0),
+(209, 29, '2018', 6.0),
+(210, 29, '2019', 14.0),
+(211, 29, '2020', 22.0),
+(212, 29, '2021', 50.0),
+(213, 29, '2022', 42.0),
+(214, 29, '2023', 28.0),
+(215, 29, '2024', 16.0),
+(216, 29, '2025', 12.0),
+(217, 29, '2026', 12.0),
+(218, 30, '2022', 1.0),
+(219, 30, '2023', 3.0),
+(220, 30, '2024', 5.0),
+(221, 30, '2025', 7.0),
+(222, 30, '2026', 8.0),
+(223, 31, '2023', 3.0),
+(224, 31, '2024', 12.0),
+(225, 31, '2025', 22.0),
+(226, 31, '2026', 30.0);
 
 -- --------------------------------------------------------
 
@@ -840,6 +1136,95 @@ INSERT INTO `player_match_stats` (`id`, `player_id`, `match_id`, `titulaire`, `m
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `player_transfers`
+--
+
+CREATE TABLE `player_transfers` (
+  `id` int(11) NOT NULL,
+  `player_id` int(11) NOT NULL,
+  `annee` year(4) NOT NULL,
+  `club_depart` varchar(100) NOT NULL,
+  `club_arrivee` varchar(100) NOT NULL,
+  `montant` decimal(6,1) NOT NULL DEFAULT 0.0 COMMENT 'En M€',
+  `type_transfert` enum('transfer','free','loan','academy') NOT NULL DEFAULT 'transfer'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Déchargement des données de la table `player_transfers`
+--
+
+INSERT INTO `player_transfers` (`id`, `player_id`, `annee`, `club_depart`, `club_arrivee`, `montant`, `type_transfert`) VALUES
+(1, 1, '2015', 'AC Milan (jeunes)', 'AC Milan', 0.0, 'academy'),
+(2, 1, '2021', 'AC Milan', 'PSG', 0.0, 'free'),
+(3, 1, '2025', 'PSG', 'Manchester City', 55.0, 'transfer'),
+(4, 2, '2022', 'Manchester City', 'Accrington Stanley', 0.0, 'loan'),
+(5, 2, '2023', 'Manchester City', 'Burnley', 0.0, 'loan'),
+(6, 2, '2024', 'Manchester City', 'Manchester City', 0.0, 'academy'),
+(7, 3, '2022', 'Lokomotiv Tashkent', 'RC Lens', 3.0, 'transfer'),
+(8, 3, '2025', 'RC Lens', 'Manchester City', 30.0, 'transfer'),
+(9, 4, '2017', 'Benfica B', 'Benfica', 0.0, 'academy'),
+(10, 4, '2020', 'Benfica', 'Manchester City', 68.0, 'transfer'),
+(11, 5, '2013', 'Barnsley', 'Everton', 4.0, 'transfer'),
+(12, 5, '2016', 'Everton', 'Manchester City', 50.0, 'transfer'),
+(13, 6, '2017', 'Chelsea', 'Bournemouth', 22.0, 'transfer'),
+(14, 6, '2020', 'Bournemouth', 'Manchester City', 41.0, 'transfer'),
+(15, 7, '2021', 'Dinamo Zagreb', 'RB Leipzig', 17.0, 'transfer'),
+(16, 7, '2023', 'RB Leipzig', 'Manchester City', 90.0, 'transfer'),
+(17, 8, '2018', 'FC Basel', 'Dortmund', 6.0, 'transfer'),
+(18, 8, '2022', 'Dortmund', 'Manchester City', 17.5, 'transfer'),
+(19, 9, '2022', 'Man City (jeunes)', 'Manchester City', 0.0, 'academy'),
+(20, 10, '2018', 'Villarreal', 'Atlético Madrid', 20.0, 'transfer'),
+(21, 10, '2019', 'Atlético Madrid', 'Manchester City', 63.0, 'transfer'),
+(22, 11, '2013', 'Dinamo Zagreb', 'Inter Milan', 10.0, 'transfer'),
+(23, 11, '2015', 'Inter Milan', 'Real Madrid', 27.0, 'transfer'),
+(24, 11, '2019', 'Real Madrid', 'Chelsea', 40.0, 'transfer'),
+(25, 11, '2023', 'Chelsea', 'Manchester City', 30.0, 'transfer'),
+(26, 12, '2021', 'Sporting CP B', 'Sporting CP', 0.0, 'academy'),
+(27, 12, '2022', 'Sporting CP', 'Wolves', 45.0, 'transfer'),
+(28, 12, '2023', 'Wolves', 'Manchester City', 53.0, 'transfer'),
+(29, 13, '2022', 'AZ Alkmaar', 'AC Milan', 20.0, 'transfer'),
+(30, 13, '2025', 'AC Milan', 'Manchester City', 65.0, 'transfer'),
+(31, 14, '2017', 'Man City (jeunes)', 'Manchester City', 0.0, 'academy'),
+(32, 15, '2015', 'Benfica B', 'Monaco', 15.0, 'transfer'),
+(33, 15, '2017', 'Monaco', 'Manchester City', 43.0, 'transfer'),
+(34, 16, '2014', 'Aston Villa (j.)', 'Aston Villa', 0.0, 'academy'),
+(35, 16, '2021', 'Aston Villa', 'Manchester City', 100.0, 'transfer'),
+(36, 17, '2023', 'Atlético Mineiro', 'Troyes', 0.0, 'loan'),
+(37, 17, '2024', 'Troyes', 'Girona', 0.0, 'loan'),
+(38, 17, '2024', 'Girona', 'Manchester City', 40.0, 'transfer'),
+(39, 18, '2020', 'Anderlecht', 'Stade Rennais', 26.0, 'transfer'),
+(40, 18, '2023', 'Stade Rennais', 'Manchester City', 60.0, 'transfer'),
+(41, 19, '2017', 'Bryne FK', 'Molde', 5.0, 'transfer'),
+(42, 19, '2019', 'Molde', 'RB Salzburg', 7.0, 'transfer'),
+(43, 19, '2020', 'RB Salzburg', 'Dortmund', 20.0, 'transfer'),
+(44, 19, '2022', 'Dortmund', 'Manchester City', 51.0, 'transfer'),
+(45, 20, '2025', 'Palmeiras', 'Manchester City', 37.0, 'transfer'),
+(46, 21, '2020', 'Angers SCO', 'Wolves', 0.0, 'loan'),
+(47, 21, '2021', 'Angers SCO', 'Wolves', 10.0, 'transfer'),
+(48, 21, '2025', 'Wolves', 'Manchester City', 42.0, 'transfer'),
+(49, 22, '2021', 'Fulham', 'Chelsea', 0.0, 'free'),
+(50, 22, '2022', 'Chelsea', 'Manchester City', 0.0, 'free'),
+(51, 23, '2021', 'Chelsea', 'Swansea City', 0.0, 'loan'),
+(52, 23, '2021', 'Chelsea', 'Crystal Palace', 22.0, 'transfer'),
+(53, 23, '2025', 'Crystal Palace', 'Manchester City', 65.0, 'transfer'),
+(54, 24, '2022', 'FC Porto B', 'FC Porto', 0.0, 'academy'),
+(55, 24, '2024', 'FC Porto', 'Manchester City', 35.0, 'transfer'),
+(56, 25, '2024', 'Man City (jeunes)', 'Manchester City', 0.0, 'academy'),
+(57, 26, '2024', 'Rosenborg', 'Manchester City', 10.0, 'transfer'),
+(58, 27, '2020', 'OL (jeunes)', 'Olympique Lyonnais', 0.0, 'academy'),
+(59, 27, '2025', 'Olympique Lyonnais', 'Manchester City', 60.0, 'transfer'),
+(60, 28, '2019', 'Stuttgart', 'VfL Wolfsburg', 0.0, 'loan'),
+(61, 28, '2020', 'Stuttgart', 'VfL Wolfsburg', 3.5, 'transfer'),
+(62, 28, '2022', 'VfL Wolfsburg', 'E. Frankfurt', 4.0, 'transfer'),
+(63, 28, '2025', 'E. Frankfurt', 'Manchester City', 75.0, 'transfer'),
+(64, 29, '2015', 'Leeds Utd (j.)', 'Leeds United', 0.0, 'academy'),
+(65, 29, '2022', 'Leeds United', 'Manchester City', 50.0, 'transfer'),
+(66, 30, '2022', 'Man City (jeunes)', 'Manchester City', 0.0, 'academy'),
+(67, 31, '2024', 'River Plate', 'Manchester City', 15.0, 'transfer');
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `users`
 --
 
@@ -860,12 +1245,12 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `nom`, `email`, `photo_profil`, `password_hash`, `role`, `derniere_activite`, `created_at`, `google_id`) VALUES
-(1, 'Admin Staff', 'admin@test.com', NULL, '$2y$10$fWDi.94oMN7VLRBjJYtcEuj/frzwXEuzfmKoCtFprtdLKhE1/tY6i', 'staff', NULL, '2026-01-01 00:00:00', NULL),
-(2, 'Erling Haaland', 'user@test.com', NULL, '$2y$10$yzdhjRL0qMXlqlzV1nbiy.44hhCaK1cRGsBNoreaC5VdVDSlMQi5K', 'player', NULL, '2026-01-01 00:00:00', NULL),
-(3, 'Fan Cityzen', 'visiteur@test.com', NULL, '$2y$10$44OXrShqAsXcwRwJb/OHB.oGct2QuEkWk1Cn83.U.8QEvLRkqZa6u', 'fan', NULL, '2026-01-01 00:00:00', NULL),
-(4, 'Adam', 'compteproadam.bellanger@gmail.com', NULL, '$2y$10$BshdV0IZZThRFyPT6HQoHurDv8XgogpycYNDrKukU/p1bCK3vTX/S', 'fan', '2026-03-12 15:38:29', '2026-03-09 09:24:02', '102966968366365245990'),
-(5, 'Guardiola', 'pep.guardiola@coach.manchestercity.com', 'uploads/avatars/avatar_5_1773141129.png', '$2y$10$j6TZle.AmclLfIrbW51/suWICE9wXC0f8n9mZTh9IncFEfb8Vs4lC', 'staff', '2026-03-12 15:40:47', '2026-03-09 09:26:23', NULL),
-(10, 'Rayan Cherki', 'rayan.cherki@joueur.manchestercity.com', NULL, '$2y$10$8xwwgjgqUTTnfMa9fb7iHu5zl.NhOG5u9TxUYk8iN8brR2oJmp2Wu', 'player', '2026-03-12 12:01:01', '2026-03-12 11:56:54', NULL);
+(1, 'Admin Staff', 'admin@test.com', NULL, '$2y$10$fWDi.94oMN7VLRBjJYtcEuj/frzwXEuzfmKoCtFprtdLKhE1/tY6i', 'staff', '2026-03-19 09:04:19', '2026-01-01 00:00:00', NULL),
+(2, 'Erling Haaland', 'user@test.com', NULL, '$2y$10$yzdhjRL0qMXlqlzV1nbiy.44hhCaK1cRGsBNoreaC5VdVDSlMQi5K', 'player', '2026-03-19 08:49:55', '2026-01-01 00:00:00', NULL),
+(3, 'Fan Cityzen', 'visiteur@test.com', NULL, '$2y$10$44OXrShqAsXcwRwJb/OHB.oGct2QuEkWk1Cn83.U.8QEvLRkqZa6u', 'fan', '2026-03-19 08:50:33', '2026-01-01 00:00:00', NULL),
+(4, 'Adam', 'compteproadam.bellanger@gmail.com', NULL, '$2y$10$BshdV0IZZThRFyPT6HQoHurDv8XgogpycYNDrKukU/p1bCK3vTX/S', 'fan', '2026-03-17 19:08:40', '2026-03-09 09:24:02', '102966968366365245990'),
+(5, 'Guardiola', 'pep.guardiola@coach.manchestercity.com', 'uploads/avatars/avatar_5_1773141129.png', '$2y$10$j6TZle.AmclLfIrbW51/suWICE9wXC0f8n9mZTh9IncFEfb8Vs4lC', 'staff', '2026-03-19 08:39:41', '2026-03-09 09:26:23', NULL),
+(10, 'Rayan Cherki', 'rayan.cherki@joueur.manchestercity.com', NULL, '$2y$10$8xwwgjgqUTTnfMa9fb7iHu5zl.NhOG5u9TxUYk8iN8brR2oJmp2Wu', 'player', '2026-03-17 19:10:38', '2026-03-12 11:56:54', NULL);
 
 --
 -- Index pour les tables déchargées
@@ -875,7 +1260,8 @@ INSERT INTO `users` (`id`, `nom`, `email`, `photo_profil`, `password_hash`, `rol
 -- Index pour la table `matchs`
 --
 ALTER TABLE `matchs`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `uk_api_id` (`api_id`);
 
 --
 -- Index pour la table `players`
@@ -885,12 +1271,26 @@ ALTER TABLE `players`
   ADD KEY `user_id` (`user_id`);
 
 --
+-- Index pour la table `player_market_value_history`
+--
+ALTER TABLE `player_market_value_history`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idx_player_annee` (`player_id`,`annee`);
+
+--
 -- Index pour la table `player_match_stats`
 --
 ALTER TABLE `player_match_stats`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_pms_player` (`player_id`),
   ADD KEY `fk_pms_match` (`match_id`);
+
+--
+-- Index pour la table `player_transfers`
+--
+ALTER TABLE `player_transfers`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idx_pt_player` (`player_id`);
 
 --
 -- Index pour la table `users`
@@ -908,19 +1308,31 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT pour la table `matchs`
 --
 ALTER TABLE `matchs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=114;
 
 --
 -- AUTO_INCREMENT pour la table `players`
 --
 ALTER TABLE `players`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+
+--
+-- AUTO_INCREMENT pour la table `player_market_value_history`
+--
+ALTER TABLE `player_market_value_history`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=227;
 
 --
 -- AUTO_INCREMENT pour la table `player_match_stats`
 --
 ALTER TABLE `player_match_stats`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=649;
+
+--
+-- AUTO_INCREMENT pour la table `player_transfers`
+--
+ALTER TABLE `player_transfers`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
 
 --
 -- AUTO_INCREMENT pour la table `users`
@@ -939,11 +1351,23 @@ ALTER TABLE `players`
   ADD CONSTRAINT `fk_players_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL;
 
 --
+-- Contraintes pour la table `player_market_value_history`
+--
+ALTER TABLE `player_market_value_history`
+  ADD CONSTRAINT `fk_vmh_player` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Contraintes pour la table `player_match_stats`
 --
 ALTER TABLE `player_match_stats`
   ADD CONSTRAINT `fk_pms_match` FOREIGN KEY (`match_id`) REFERENCES `matchs` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `fk_pms_player` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE CASCADE;
+
+--
+-- Contraintes pour la table `player_transfers`
+--
+ALTER TABLE `player_transfers`
+  ADD CONSTRAINT `fk_pt_player` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

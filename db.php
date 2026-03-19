@@ -1,5 +1,4 @@
 <?php
-// db.php : fichier de connexion à la base de données
 
 $host   = getenv('MYSQL_HOST')     ?: 'localhost';
 $dbname = getenv('MYSQL_DATABASE') ?: 'mancity_univers_stats';

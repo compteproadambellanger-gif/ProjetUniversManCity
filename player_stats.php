@@ -70,7 +70,7 @@ try {
         $vm_labels[] = (string)$row['annee'];
         $vm_data[]   = (float)$row['valeur'];
     }
-} catch (PDOException $e) { /* table pas encore créée */ }
+} catch (PDOException $e) { }
 
 // Transferts
 $transferts = [];
@@ -81,7 +81,7 @@ try {
     );
     $rt->execute([$id_joueur]);
     $transferts = $rt->fetchAll(PDO::FETCH_ASSOC);
-} catch (PDOException $e) { /* table pas encore créée */ }
+} catch (PDOException $e) { }
 
 $tr_styles = [
     'transfer' => ['bg'=>'rgba(108,171,221,0.1)', 'border'=>'rgba(108,171,221,0.35)', 'color'=>'#6CABDD', 'label'=>'Transfert'],
