@@ -83,7 +83,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $username = strtolower(explode('@', $email)[0]);
             $parts = preg_split('/[.\-_]/', $username);
 
-            $stmt = $pdo->query('SELECT id, full_name FROM players WHERE user_id IS NULL');
+            // Chercher parmi tous les joueurs (pas seulement ceux non liés)
+            $stmt = $pdo->query('SELECT id, full_name, user_id FROM players');
             $candidats = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
             $matched = null;

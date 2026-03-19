@@ -10,12 +10,11 @@ if (!isset($_SESSION['user_id']) || ($_SESSION['role'] ?? '') !== 'staff') {
 // ─── CONFIGURATION ──────────────────────────────────────────────────────────
 // Clé API gratuite : https://www.football-data.org/client/register
 // Copiez votre clé ici :
-define('FOOTBALL_API_KEY', '');
+define('FOOTBALL_API_KEY', '57f009276de7404abe25810775a88368');
 define('MANCITY_ID', 65);
 define('LAST_SYNC_FILE', __DIR__ . '/../../.last_sync');
 // ────────────────────────────────────────────────────────────────────────────
 
-// Ajouter les colonnes si elles n'existent pas encore
 try {
     $pdo->exec("ALTER TABLE matchs ADD COLUMN status ENUM('played','upcoming') NOT NULL DEFAULT 'played'");
 } catch (PDOException $e) { /* colonne déjà présente */ }
