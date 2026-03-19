@@ -20,7 +20,7 @@ INSTALLATION
 1. Copier le dossier dans htdocs/ (XAMPP)
 2. Démarrer Apache et MySQL via XAMPP
 3. Ouvrir phpMyAdmin : http://localhost/phpmyadmin
-4. Créer une base de données : mancity_univers
+4. Créer une base de données : mancity_univers_stats
 5. Importer le fichier : database.sql
 6. Accéder au site : http://localhost/ProjetUnivers/
 
